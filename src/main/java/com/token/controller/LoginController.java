@@ -11,64 +11,90 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
+import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+@Component
 public class LoginController implements Initializable {
     @FXML
-    private GNAvatarView avatar;
-    @FXML private HBox box_username;
-    @FXML private HBox box_password;
-    @FXML private TextField username;
-    @FXML private TextField password;
-    @FXML private Button login;
+    private GNAvatarView avatar; // 头像视图
+    @FXML private HBox box_username; // 用户名输入框容器
+    @FXML private HBox box_password; // 密码输入框容器
+    @FXML private TextField username; // 用户名输入框
+    @FXML private TextField password; // 密码输入框
+    @FXML private Button login; // 登录按钮
 
-    @FXML private Label lbl_password;
-    @FXML private Label lbl_username;
-    @FXML private Label lbl_error;
+    @FXML
+    private Label lbl_password; // 密码错误提示标签
+    @FXML
+    private Label lbl_username; // 用户名错误提示标签
+    @FXML
+    private Label lbl_error; // 错误提示标签
 
-    private RotateTransition rotateTransition = new RotateTransition();
+    private RotateTransition rotateTransition = new RotateTransition(); // 旋转动画
 
+    /**
+     * 初始化
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        // 初始化旋转动画
         rotateTransition.setNode(avatar);
         rotateTransition.setByAngle(360);
         rotateTransition.setDuration(Duration.seconds(1));
         rotateTransition.setAutoReverse(true);
 
+        // 为密码和用户名添加效果
         addEffect(password);
         addEffect(username);
 
+        // 设置监听器
         setupListeners();
-
     }
 
+    /**
+     * 为节点添加交互效果
+     * @param node 要添加效果的节点
+     */
     private void addEffect(Node node){
+        // 添加鼠标按下事件监听器
         node.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             rotateTransition.play();
             Pulse pulse = new Pulse(node.getParent());
             pulse.setDelay(Duration.millis(100));
             pulse.setSpeed(5);
             pulse.play();
+            // 更改节点样式
             node.getParent().setStyle("-icon-color : -success; -fx-border-color : -success");
         });
 
+        // 添加焦点状态监听器
         node.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if(!node.isFocused())
+                // 当失去焦点时恢复默认样式
                 node.getParent().setStyle("-icon-color : -dark-gray; -fx-border-color : transparent");
-            else node.getParent().setStyle("-icon-color : -success; -fx-border-color : -success");
+            else
+                // 当获得焦点时设置成功样式
+                node.getParent().setStyle("-icon-color : -success; -fx-border-color : -success");
         });
     }
 
+    /**
+     * 设置各种监听器
+     */
     private void setupListeners(){
+        // 为密码输入框添加监听器
         password.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if(!validPassword()){
                 if(!newValue){
+                    // 显示错误提示并播放动画
                     Flash swing = new Flash(box_password);
                     lbl_password.setVisible(true);
                     new SlideInLeft(lbl_password).play();
@@ -76,16 +102,20 @@ public class LoginController implements Initializable {
                     swing.play();
                     box_password.setStyle("-icon-color : -danger; -fx-border-color : -danger");
                 } else {
+                    // 当失去焦点时隐藏错误提示
                     lbl_password.setVisible(false);
                 }
             } else {
+                // 输入有效时隐藏错误提示
                 lbl_error.setVisible(false);
             }
         });
 
+        // 为用户名输入框添加监听器
         username.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if(!validUsername()){
                 if(!newValue){
+                    // 显示错误提示并播放动画
                     Flash swing = new Flash(box_username);
                     lbl_username.setVisible(true);
                     new SlideInLeft(lbl_username).play();
@@ -93,22 +123,35 @@ public class LoginController implements Initializable {
                     swing.play();
                     box_username.setStyle("-icon-color : -danger; -fx-border-color : -danger");
                 } else {
+                    // 当失去焦点时隐藏错误提示
                     lbl_username.setVisible(false);
                 }
             } else {
+                // 输入有效时隐藏错误提示
                 lbl_error.setVisible(false);
             }
         });
     }
 
+    /**
+     * 验证密码是否合法
+     * @return 是否合法
+     */
     private boolean validPassword(){
         return !password.getText().isEmpty() && password.getLength() > 3;
     }
 
+    /**
+     * 验证用户名是否合法
+     * @return 是否合法
+     */
     private boolean validUsername(){
         return !username.getText().isEmpty() && username.getLength() > 3;
     }
 
+    /**
+     * 处理登录按钮点击事件
+     */
     @FXML
     private void loginAction(){
         Pulse pulse = new Pulse(login);
@@ -117,16 +160,16 @@ public class LoginController implements Initializable {
         if(validPassword() && validUsername())
             enter();
         else {
+            // 输入不合法时显示错误提示
             lbl_password.setVisible(true);
             lbl_username.setVisible(true);
         }
     }
 
-
+    /**
+     * 处理登录操作
+     */
     private void enter() {
-    }
-
-    @FXML
-    private void switchCreate(){
+        // TODO: 实现登录逻辑
     }
 }

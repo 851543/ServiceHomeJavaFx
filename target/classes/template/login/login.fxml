@@ -31,11 +31,11 @@
                <children>
                   <HBox prefHeight="439.0" prefWidth="726.0">
                      <children>
-                        <HBox alignment="CENTER" prefHeight="437.0" prefWidth="544.0" spacing="40.0" styleClass="teste">
+                        <HBox alignment="CENTER" prefHeight="437.0" prefWidth="544.0" spacing="40.0" styleClass="test">
                            <children>
                               <GNAvatarView fx:id="avatar" strokeWidth="0.0">
                                  <image>
-                                    <Image url="@/styles/img/logo-mini.png" />
+                                    <Image url="@/styles/img/148051367.png" />
                                  </image>
                                  <effect>
                                     <DropShadow color="#00000035" />
@@ -101,11 +101,6 @@
                   </HBox>
                </children>
             </FlowPane>
-            <Hyperlink alignment="CENTER_RIGHT" contentDisplay="RIGHT" onMouseClicked="#switchCreate" text="创建用户">
-               <graphic>
-                  <SVGPath content="M16.01 11H4v2h12.01v3L20 12l-3.99-4z" />
-               </graphic>
-            </Hyperlink>
          </children>
       </VBox>
    </children>

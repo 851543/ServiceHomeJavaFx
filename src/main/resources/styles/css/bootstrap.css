@@ -380,11 +380,11 @@
 *************************************************************************************/
 
 .clearable-field{
-    -fx-skin: "com.bjpowernode.theme.skin.ClearableSkin";
+    -fx-skin: "com.token.fx.skin.ClearableSkin";
 }
 
 .viewer-field{
-    -fx-skin: "com.bjpowernode.theme.skin.ViewerSkin";
+    -fx-skin: "com.token.fx.skin.ViewerSkin";
 }
 
 .text-field .action-button {
