@@ -19,10 +19,14 @@ import org.springframework.stereotype.Component;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * 登录控制器类
+ */
 @Component
 public class LoginController implements Initializable {
     @FXML
     private GNAvatarView avatar; // 头像视图
+
     @FXML private HBox box_username; // 用户名输入框容器
     @FXML private HBox box_password; // 密码输入框容器
     @FXML private TextField username; // 用户名输入框
@@ -39,9 +43,9 @@ public class LoginController implements Initializable {
     private RotateTransition rotateTransition = new RotateTransition(); // 旋转动画
 
     /**
-     * 初始化
-     * @param location
-     * @param resources
+     * 初始化方法
+     * @param location URL对象
+     * @param resources 资源包
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {

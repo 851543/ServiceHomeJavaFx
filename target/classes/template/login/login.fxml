@@ -29,13 +29,13 @@
          <children>
             <FlowPane alignment="CENTER" columnHalignment="CENTER" prefHeight="455.0" prefWidth="586.0" VBox.vgrow="ALWAYS">
                <children>
-                  <HBox prefHeight="439.0" prefWidth="726.0">
+                  <HBox prefHeight="439.0" prefWidth="800.0">
                      <children>
                         <HBox alignment="CENTER" prefHeight="437.0" prefWidth="544.0" spacing="40.0" styleClass="test">
                            <children>
                               <GNAvatarView fx:id="avatar" strokeWidth="0.0">
                                  <image>
-                                    <Image url="@/styles/img/148051367.png" />
+                                    <Image url="@/styles/img/logo.png" />
                                  </image>
                                  <effect>
                                     <DropShadow color="#00000035" />
@@ -96,7 +96,30 @@
                            </children>
                            <padding>
                               <Insets left="10.0" top="120.0" />
-                           </padding></VBox>
+                           </padding>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="437.0" prefWidth="200.0" spacing="20.0">
+                           <children>
+                              <Button fx:id="student" defaultButton="true" mnemonicParsing="false" prefWidth="150" text="学生">
+                                 <styleClass>
+                                    <String fx:value="btn-large" />
+                                    <String fx:value="login" />
+                                 </styleClass>
+                              </Button>
+                              <Button fx:id="admin" defaultButton="true" mnemonicParsing="false" prefWidth="150" text="管理员">
+                                 <styleClass>
+                                    <String fx:value="btn-large" />
+                                    <String fx:value="login" />
+                                 </styleClass>
+                              </Button>
+                              <Button fx:id="service" defaultButton="true" mnemonicParsing="false" prefWidth="150" text="维修员">
+                                 <styleClass>
+                                    <String fx:value="btn-large" />
+                                    <String fx:value="login" />
+                                 </styleClass>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
                </children>

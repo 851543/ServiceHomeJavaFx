@@ -34,7 +34,7 @@
             <VBox fx:id="drawer" alignment="TOP_CENTER" prefHeight="651.0" prefWidth="250.0" stylesheets="@/styles/css/main/drawer.css">
                   <GNAvatarView fx:id="avatar" minHeight="-Infinity" prefHeight="181.0" prefWidth="249.0" type="CIRCLE">
                      <image>
-                        <Image url="@/styles/img/avatar.jpg" />
+                        <Image url="@/styles/img/pe.png" />
                      </image>
                      <effect>
                         <DropShadow color="#00000026" />
