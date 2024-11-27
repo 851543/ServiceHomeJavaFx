@@ -5,6 +5,8 @@ import java.io.Writer;
 
 /**
  * 自定义异常处理类,用于将Throwable转换为字符串。
+ * @author 阿俊
+ * @description
  */
 public class ExceptionWriter extends PrintWriter {
 

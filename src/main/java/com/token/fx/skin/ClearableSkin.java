@@ -6,6 +6,8 @@ import javafx.scene.control.TextField;
 /**
  * 清除按钮皮肤类。
  * 这个类扩展了SkinAction类,用于给TextField添加清除按钮功能。
+ * @author 阿俊
+ * @description
  */
 public class ClearableSkin extends SkinAction {
 

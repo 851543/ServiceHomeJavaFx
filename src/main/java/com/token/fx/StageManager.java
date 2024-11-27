@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Value;
 /**
  * StageManager 类用于管理 JavaFX 应用的窗口和场景切换。
  * 它包含了初始化窗口、加载场景和切换场景等功能。
+ * @author 阿俊
+ * @description
  */
 public class StageManager {
 

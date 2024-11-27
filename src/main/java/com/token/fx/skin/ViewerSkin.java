@@ -6,6 +6,8 @@ import javafx.scene.control.TextField;
 /**
  * 自定义的Viewer皮肤类,继承自SkinAction。
  * 用于处理密码字段的文本遮蔽和显示功能。
+ * @author 阿俊
+ * @description
  */
 public class ViewerSkin extends SkinAction {
 

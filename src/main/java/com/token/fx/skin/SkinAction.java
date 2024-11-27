@@ -14,6 +14,8 @@ import javafx.scene.layout.StackPane;
 /**
  * SkinAction是一个抽象类,继承自TextFieldSkin。
  * 它用于创建自定义的TextField或PasswordField的皮肤。
+ * @author 阿俊
+ * @description
  */
 public abstract class SkinAction extends TextFieldSkin {
 

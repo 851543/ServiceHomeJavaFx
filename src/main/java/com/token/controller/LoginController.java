@@ -4,6 +4,7 @@ import animatefx.animation.Flash;
 import animatefx.animation.Pulse;
 import animatefx.animation.SlideInLeft;
 import com.gn.GNAvatarView;
+import com.token.eunms.LoginRole;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,6 +22,8 @@ import java.util.ResourceBundle;
 
 /**
  * 登录控制器类
+ * @author 阿俊
+ * @description
  */
 @Component
 public class LoginController implements Initializable {
@@ -39,6 +42,8 @@ public class LoginController implements Initializable {
     private Label lbl_username; // 用户名错误提示标签
     @FXML
     private Label lbl_error; // 错误提示标签
+
+    private LoginRole loginRole;
 
     private RotateTransition rotateTransition = new RotateTransition(); // 旋转动画
 
@@ -64,30 +69,49 @@ public class LoginController implements Initializable {
     }
 
     /**
-     * 为节点添加交互效果
-     * @param node 要添加效果的节点
+     *
      */
-    private void addEffect(Node node){
-        // 添加鼠标按下事件监听器
-        node.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
-            rotateTransition.play();
-            Pulse pulse = new Pulse(node.getParent());
-            pulse.setDelay(Duration.millis(100));
-            pulse.setSpeed(5);
-            pulse.play();
-            // 更改节点样式
-            node.getParent().setStyle("-icon-color : -success; -fx-border-color : -success");
-        });
+    @FXML
+    private void studentClick(){
+        username.setText("管理号");
+        loginRole = LoginRole.STUDENT;
+    }
 
-        // 添加焦点状态监听器
-        node.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if(!node.isFocused())
-                // 当失去焦点时恢复默认样式
-                node.getParent().setStyle("-icon-color : -dark-gray; -fx-border-color : transparent");
-            else
-                // 当获得焦点时设置成功样式
-                node.getParent().setStyle("-icon-color : -success; -fx-border-color : -success");
-        });
+    @FXML
+    private void adminClick(){
+        username.setText("管理号");
+        loginRole = LoginRole.ADMIN;
+    }
+
+    @FXML
+    private void serviceClick(){
+        username.setText("管理号");
+        loginRole = LoginRole.SERVICE;
+    }
+
+
+    /**
+     * 处理登录按钮点击事件
+     */
+    @FXML
+    private void loginAction(){
+        Pulse pulse = new Pulse(login);
+        pulse.setDelay(Duration.millis(20));
+        pulse.play();
+        if(validPassword() && validUsername())
+            enter();
+        else {
+            // 输入不合法时显示错误提示
+            lbl_password.setVisible(true);
+            lbl_username.setVisible(true);
+        }
+    }
+
+    /**
+     * 处理登录操作
+     */
+    private void enter() {
+        // TODO: 实现登录逻辑
     }
 
     /**
@@ -138,11 +162,39 @@ public class LoginController implements Initializable {
     }
 
     /**
+     * 为节点添加交互效果
+     * @param node 要添加效果的节点
+     */
+    private void addEffect(Node node){
+        // 添加鼠标按下事件监听器
+        node.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
+            rotateTransition.play();
+            Pulse pulse = new Pulse(node.getParent());
+            pulse.setDelay(Duration.millis(100));
+            pulse.setSpeed(5);
+            pulse.play();
+            // 更改节点样式
+            node.getParent().setStyle("-icon-color : -success; -fx-border-color : -success");
+        });
+
+        // 添加焦点状态监听器
+        node.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if(!node.isFocused())
+                // 当失去焦点时恢复默认样式
+                node.getParent().setStyle("-icon-color : -dark-gray; -fx-border-color : transparent");
+            else
+                // 当获得焦点时设置成功样式
+                node.getParent().setStyle("-icon-color : -success; -fx-border-color : -success");
+        });
+    }
+
+
+    /**
      * 验证密码是否合法
      * @return 是否合法
      */
     private boolean validPassword(){
-        return !password.getText().isEmpty() && password.getLength() > 3;
+        return !password.getText().isEmpty();
     }
 
     /**
@@ -150,30 +202,6 @@ public class LoginController implements Initializable {
      * @return 是否合法
      */
     private boolean validUsername(){
-        return !username.getText().isEmpty() && username.getLength() > 3;
-    }
-
-    /**
-     * 处理登录按钮点击事件
-     */
-    @FXML
-    private void loginAction(){
-        Pulse pulse = new Pulse(login);
-        pulse.setDelay(Duration.millis(20));
-        pulse.play();
-        if(validPassword() && validUsername())
-            enter();
-        else {
-            // 输入不合法时显示错误提示
-            lbl_password.setVisible(true);
-            lbl_username.setVisible(true);
-        }
-    }
-
-    /**
-     * 处理登录操作
-     */
-    private void enter() {
-        // TODO: 实现登录逻辑
+        return !username.getText().isEmpty();
     }
 }

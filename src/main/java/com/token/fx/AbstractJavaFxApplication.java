@@ -22,6 +22,8 @@ import javafx.stage.Stage;
 
 /**
  * 抽象JavaFX应用程序类
+ * @author 阿俊
+ * @description
  */
 public abstract class AbstractJavaFxApplication extends Application {
 

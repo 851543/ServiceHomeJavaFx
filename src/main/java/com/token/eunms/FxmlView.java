@@ -5,6 +5,8 @@ import java.util.ResourceBundle;
 /**
  * 定义了应用程序中不同视图的枚举类。
  * 每个枚举常量代表一个特定的FXML视图。
+ * @author 阿俊
+ * @description
  */
 public enum FxmlView {
 

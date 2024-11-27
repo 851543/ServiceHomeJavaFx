@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 
 /**
  * Java配置类,用于配置应用程序的各种 bean。
+ * @author 阿俊
+ * @description
  */
 @Configuration
 public class AppJavaConfig {

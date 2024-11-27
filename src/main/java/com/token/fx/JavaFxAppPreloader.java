@@ -16,6 +16,8 @@ import javafx.stage.StageStyle;
 
 /**
  * 自定义JavaFX预加载器类
+ * @author 阿俊
+ * @description
  */
 public class JavaFxAppPreloader extends Preloader {
 
