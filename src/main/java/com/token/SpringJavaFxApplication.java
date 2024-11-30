@@ -1,13 +1,11 @@
-package com;
+package com.token;
 
 import com.token.fx.AbstractJavaFxApplication;
 import com.token.eunms.FxmlView;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-
 import java.util.Arrays;
 
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication
 public class SpringJavaFxApplication extends AbstractJavaFxApplication {
 
     public static void main(String[] args) {

@@ -91,7 +91,7 @@
                         </HBox>
                         <VBox prefHeight="437.0" prefWidth="111.0" spacing="20.0">
                            <children>
-                              <Label fx:id="lbl_username" prefHeight="50.0" styleClass="text-danger" text="学号" visible="false" />
+                              <Label fx:id="lbl_username" prefHeight="50.0" styleClass="text-danger" text="学号无效" visible="false" />
                               <Label fx:id="lbl_password" layoutX="10.0" layoutY="10.0" prefHeight="50.0" styleClass="text-danger" text="密码无效" visible="false" />
                            </children>
                            <padding>

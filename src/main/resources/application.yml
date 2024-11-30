@@ -14,16 +14,18 @@ spring:
       url: jdbc:mysql://${token.datasource.host}:${token.datasource.port}/${token.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: ${token.datasource.username}
       password: ${token.datasource.password}
-  redis:
-    # redis配置
-    host: ${token.redis.host}
-    port: ${token.redis.port}
-    database: ${token.redis.database}
 
-mybatis:
-  # mapper配置
+logging:
+  # logging配置
+  level:
+    com:
+      token:
+        mapper: debug
+        service: info
+        controller: info
+
+mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.token.pojo.entity
+  type-aliases-package: com.token.entity
   configuration:
-    # 开启驼峰命名
     map-underscore-to-camel-case: true

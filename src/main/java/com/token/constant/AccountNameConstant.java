@@ -6,6 +6,7 @@ package com.token.constant;
  * @description
  */
 public interface AccountNameConstant {
+    String ADMIN = "管理员";
     String STUDENT_ID = "学号";
     String WORK_ID = "工号";
 }

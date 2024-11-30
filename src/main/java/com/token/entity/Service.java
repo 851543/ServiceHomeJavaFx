@@ -1,4 +1,4 @@
-package com.token.pojo.entity;
+package com.token.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;

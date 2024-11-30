@@ -1,4 +1,4 @@
-package com.token.pojo.entity;
+package com.token.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
  * @author 阿俊
  * @description  
  */
-@TableName(value ="user")
-public class User  implements Serializable {
+@TableName(value ="dispatch")
+public class Dispatch  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,49 +24,13 @@ public class User  implements Serializable {
     private Long id;
 
     /**
-     * 用户账号 
+     * 报修id 
      */
-    @TableField(value="user_name")
-    private String userName;
+    @TableField(value="repair_id")
+    private Integer repairId;
 
     /**
-     * 用户昵称 
-     */
-    @TableField(value="nick_name")
-    private String nickName;
-
-    /**
-     * 用户邮箱 
-     */
-    @TableField(value="email")
-    private String email;
-
-    /**
-     * 手机号码 
-     */
-    @TableField(value="phone_number")
-    private String phoneNumber;
-
-    /**
-     * 用户性别（0男 1女 2未知） 
-     */
-    @TableField(value="sex")
-    private String sex;
-
-    /**
-     * 头像地址 
-     */
-    @TableField(value="avatar")
-    private String avatar;
-
-    /**
-     * 密码 
-     */
-    @TableField(value="password")
-    private String password;
-
-    /**
-     * 帐号状态（0正常 1停用） 
+     * 报修状态（0未处理 1已处理） 
      */
     @TableField(value="status")
     private String status;

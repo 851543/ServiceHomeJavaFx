@@ -4,7 +4,14 @@ import animatefx.animation.Flash;
 import animatefx.animation.Pulse;
 import animatefx.animation.SlideInLeft;
 import com.gn.GNAvatarView;
+import com.token.constant.AccountNameConstant;
+import com.token.constant.MessageConstant;
+import com.token.entity.User;
+import com.token.eunms.FxmlView;
 import com.token.eunms.LoginRole;
+import com.token.fx.StageManager;
+import com.token.service.UserService;
+import com.token.utils.SpringUtils;
 import javafx.animation.RotateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +22,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -43,7 +51,10 @@ public class LoginController implements Initializable {
     @FXML
     private Label lbl_error; // 错误提示标签
 
-    private LoginRole loginRole;
+    @Autowired
+    private UserService userService;
+
+    private LoginRole loginRole = LoginRole.STUDENT;
 
     private RotateTransition rotateTransition = new RotateTransition(); // 旋转动画
 
@@ -73,20 +84,17 @@ public class LoginController implements Initializable {
      */
     @FXML
     private void studentClick(){
-        username.setText("管理号");
-        loginRole = LoginRole.STUDENT;
+        LoginSwitch(LoginRole.STUDENT);
     }
 
     @FXML
     private void adminClick(){
-        username.setText("管理号");
-        loginRole = LoginRole.ADMIN;
+        LoginSwitch(LoginRole.ADMIN);
     }
 
     @FXML
     private void serviceClick(){
-        username.setText("管理号");
-        loginRole = LoginRole.SERVICE;
+        LoginSwitch(LoginRole.SERVICE);
     }
 
 
@@ -107,11 +115,40 @@ public class LoginController implements Initializable {
         }
     }
 
+    private void LoginSwitch(LoginRole login){
+        username.getParent().setStyle("-icon-color : -dark-gray; -fx-border-color : transparent");
+        password.getParent().setStyle("-icon-color : -dark-gray; -fx-border-color : transparent");
+        lbl_username.setVisible(false);
+        lbl_password.setVisible(false);
+        if (login == LoginRole.STUDENT){
+            username.setPromptText(AccountNameConstant.STUDENT_ID);
+            lbl_username.setText(AccountNameConstant.STUDENT_ID + MessageConstant.VITIATION);
+            loginRole =LoginRole.STUDENT;
+        }
+        if (login == LoginRole.ADMIN){
+            username.setPromptText(AccountNameConstant.ADMIN);
+            lbl_username.setText(AccountNameConstant.ADMIN + MessageConstant.VITIATION);
+            loginRole = LoginRole.ADMIN;
+        }
+        if (login == LoginRole.SERVICE){
+            username.setPromptText(AccountNameConstant.WORK_ID);
+            lbl_username.setText(AccountNameConstant.WORK_ID + MessageConstant.VITIATION);
+            loginRole = LoginRole.SERVICE;
+        }
+    }
+
     /**
      * 处理登录操作
      */
     private void enter() {
-        // TODO: 实现登录逻辑
+        User user = new User();
+        user.setUserName(username.getText());
+        user.setPassword(password.getText());
+        if (!userService.login(loginRole,user)){
+            lbl_password.setVisible(true);
+            lbl_username.setVisible(true);
+        }
+        SpringUtils.getBean(StageManager.class).switchScene(FxmlView.MAIN);
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.token.pojo.entity;
+package com.token.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
  * @author 阿俊
  * @description  
  */
-@TableName(value ="role")
-public class Role  implements Serializable {
+@TableName(value ="repair")
+public class Repair  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,13 +24,31 @@ public class Role  implements Serializable {
     private Long id;
 
     /**
-     * 角色名称 
+     * 用户id 
      */
-    @TableField(value="role_name")
-    private String roleName;
+    @TableField(value="user_id")
+    private Integer userId;
 
     /**
-     * 角色状态（0正常 1停用） 
+     * 楼号 
+     */
+    @TableField(value="floor")
+    private String floor;
+
+    /**
+     * 房号 
+     */
+    @TableField(value="room")
+    private String room;
+
+    /**
+     * 内容 
+     */
+    @TableField(value="content")
+    private String content;
+
+    /**
+     * 报修状态（0未提交 1待受理 2已派工 3维修结束） 
      */
     @TableField(value="status")
     private String status;
