@@ -32,13 +32,13 @@
                                 <TableView fx:id="userTableView" prefHeight="600">
                                     <columns>
                                         <TableColumn fx:id="c1" text="编号">
-                                        </TableColumn>
+
                                         <TableColumn fx:id="c2" text="姓名">
-                                        </TableColumn>
+
                                         <TableColumn fx:id="c3" text="余额">
-                                        </TableColumn>
+
                                         <TableColumn fx:id="c4" text="状态">
-                                        </TableColumn>
+
                                     </columns>
                                     <columnResizePolicy>
                                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>

@@ -14,6 +14,8 @@ import org.springframework.util.DigestUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -33,12 +35,14 @@ public class UserServiceImpl implements UserService {
         if (!userEmptyCheck(userDTO)){
             return false;
         }
-        User user = userMapper.getByUserName(userDTO.getUserName());
+        String pws = userDTO.getPassword();
+        userDTO.setPassword(null);
+        User user = userMapper.getUserByUser(userDTO);
         if (ObjectUtils.isEmpty(user) || StringUtils.isEmpty(user.getUserName())){
             return false;
         }
         if (!roleMapper.getByRolesUserName(userDTO.getUserName()).stream().anyMatch(role -> role.equals(getRole(loginRole)))) return false;
-        if (!user.getPassword().equals(DigestUtils.md5DigestAsHex(userDTO.getPassword().getBytes()))) return false;
+        if (!user.getPassword().equals(DigestUtils.md5DigestAsHex(pws.getBytes()))) return false;
         return true;
     }
 
@@ -54,13 +58,23 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isEmpty(userDTO.getPhoneNumber())){
             return false;
         }
-        User user = userMapper.getByUserName(userDTO.getUserName());
+        User user = userMapper.getUserByUser(userDTO);
         if (!ObjectUtils.isEmpty(user) && !StringUtils.isEmpty(user.getUserName())){
             return false;
         }
         userDTO.setPassword(DigestUtils.md5DigestAsHex(userDTO.getPassword().getBytes()));
         userMapper.insert(userDTO);
         return true;
+    }
+
+    /**
+     * 用户集合
+     * @param user
+     * @return
+     */
+    @Override
+    public List<User> userList(User user) {
+        return userMapper.getUserListByUser(user);
     }
 
     /**

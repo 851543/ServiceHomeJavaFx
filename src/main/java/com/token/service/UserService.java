@@ -3,6 +3,8 @@ package com.token.service;
 import com.token.entity.User;
 import com.token.eunms.LoginRole;
 
+import java.util.List;
+
 /**
  * 用户业务接口
  */
@@ -20,4 +22,10 @@ public interface UserService {
      * @param user
      */
     boolean insert(User user);
+
+    /**
+     * 用户集合
+     * @param user
+     */
+    List<User> userList(User user);
 }

@@ -38,6 +38,40 @@ public enum FxmlView {
         public String fxml() {
             return "/template/main/main.fxml";
         }
+    },
+
+    REPAIR{
+        @Override
+        public String title() {
+            return getStringFromResourceBundle("repair.title");
+        }
+
+        @Override
+        public String fxml() {
+            return "/template/repair/repair.fxml";
+        }
+    },
+    SERVICE{
+        @Override
+        public String title() {
+            return getStringFromResourceBundle("service.title");
+        }
+
+        @Override
+        public String fxml() {
+            return "/template/service/service.fxml";
+        }
+    },
+    STUDENT{
+        @Override
+        public String title() {
+            return getStringFromResourceBundle("student.title");
+        }
+
+        @Override
+        public String fxml() {
+            return "/template/student/student.fxml";
+        }
     };
 
     /**

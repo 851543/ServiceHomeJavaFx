@@ -5,6 +5,8 @@ import com.token.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 
 /**
  * 用户数据接口
@@ -19,9 +21,16 @@ public interface UserMapper {
     void insert(User user);
 
     /**
-     * 根据用户名查询用户数据
-     * @param userName
+     * 根据用户信息获取用户数据
+     * @param user
      * @return
      */
-    User getByUserName(@Param("userName") String userName);
+    User getUserByUser(User user);
+
+    /**
+     * 根据用户信息获取用户数据集合
+     * @param user
+     * @return
+     */
+    List<User> getUserListByUser(User user);
 }

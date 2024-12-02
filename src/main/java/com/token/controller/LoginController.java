@@ -13,6 +13,7 @@ import com.token.fx.StageManager;
 import com.token.service.UserService;
 import com.token.utils.SpringUtils;
 import javafx.animation.RotateTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -102,7 +103,8 @@ public class LoginController implements Initializable {
      * 处理登录按钮点击事件
      */
     @FXML
-    private void loginAction(){
+    private void loginAction(ActionEvent event){
+        event.consume();
         Pulse pulse = new Pulse(login);
         pulse.setDelay(Duration.millis(20));
         pulse.play();
@@ -147,6 +149,7 @@ public class LoginController implements Initializable {
         if (!userService.login(loginRole,user)){
             lbl_password.setVisible(true);
             lbl_username.setVisible(true);
+            return;
         }
         SpringUtils.getBean(StageManager.class).switchScene(FxmlView.MAIN);
     }

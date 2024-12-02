@@ -100,19 +100,19 @@
                         </VBox>
                         <VBox alignment="CENTER" prefHeight="437.0" prefWidth="200.0" spacing="20.0">
                            <children>
-                              <Button fx:id="student" defaultButton="true" onMouseClicked="#studentClick" mnemonicParsing="false" prefWidth="150" text="学生">
+                              <Button fx:id="student" defaultButton="false" onMouseClicked="#studentClick" mnemonicParsing="false" prefWidth="150" text="学生">
                                  <styleClass>
                                     <String fx:value="btn-large" />
                                     <String fx:value="login" />
                                  </styleClass>
                               </Button>
-                              <Button fx:id="admin" defaultButton="true" onMouseClicked="#adminClick" mnemonicParsing="false" prefWidth="150" text="管理员">
+                              <Button fx:id="admin" defaultButton="false" onMouseClicked="#adminClick" mnemonicParsing="false" prefWidth="150" text="管理员">
                                  <styleClass>
                                     <String fx:value="btn-large" />
                                     <String fx:value="login" />
                                  </styleClass>
                               </Button>
-                              <Button fx:id="service" defaultButton="true" onMouseClicked="#serviceClick" mnemonicParsing="false" prefWidth="150" text="维修员">
+                              <Button fx:id="service" defaultButton="false" onMouseClicked="#serviceClick" mnemonicParsing="false" prefWidth="150" text="维修员">
                                  <styleClass>
                                     <String fx:value="btn-large" />
                                     <String fx:value="login" />

@@ -5,6 +5,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 import java.util.Objects;
 
 import com.token.eunms.FxmlView;
+import javafx.scene.control.ScrollPane;
 import org.slf4j.Logger;
 
 import com.gn.decorator.GNDecorator;
@@ -96,6 +97,16 @@ public class StageManager {
 	public void switchScene(final FxmlView view) {
 		Parent viewRootNodeHierarchy = loadViewNodeHierarchy(view.fxml());
 		decorator.setContent(viewRootNodeHierarchy);
+	}
+
+	/**
+	 * 局部切换到指定的场景
+	 * @param view
+	 * @param body
+	 */
+	public void switchContent(final FxmlView view, ScrollPane body) {
+		Parent viewRootNodeHierarchy = loadViewNodeHierarchy(view.fxml());
+		body.setContent(viewRootNodeHierarchy);
 	}
 
 	/**

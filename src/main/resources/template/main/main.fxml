@@ -109,36 +109,21 @@
                   <content>
                      <VBox fx:id="views" styleClass="drawer-content">
                         <children>
-                           <Button fx:id="home" alignment="BASELINE_LEFT" graphicTextGap="20.0" mnemonicParsing="false"  prefHeight="50.0" prefWidth="271.0" styleClass="drawer-item" text="主页">
-                              <graphic>
-                                 <SVGPath content="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" mouseTransparent="true" styleClass="icon" />
-                              </graphic>
-                           </Button>
-                           <Button  alignment="BASELINE_LEFT" graphicTextGap="20.0" mnemonicParsing="false"  prefHeight="50.0" prefWidth="271.0" styleClass="drawer-item" text="图书管理">
+                           <Button  alignment="BASELINE_LEFT" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#repairClicked" prefHeight="50.0" prefWidth="271.0" styleClass="drawer-item" text="报修信息">
                               <graphic>
                                  <SVGPath content="M11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16zM11.99 18.54l-7.37-5.73L3 14.07l9 7 9-7-1.63-1.27-7.38 5.74zM12 16l7.36-5.73L21 9l-9-7-9 7 1.63 1.27L12 16z" styleClass="icon" />
                               </graphic>
                            </Button>
-                           <Button  alignment="BASELINE_LEFT" graphicTextGap="20.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="271.0" styleClass="drawer-item" text="借阅管理">
+                           <Button  alignment="BASELINE_LEFT" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#serviceClicked" prefHeight="50.0" prefWidth="271.0" styleClass="drawer-item" text="维修员管理">
                               <graphic>
                                  <SVGPath content="M2 12C2 6.48 6.48 2 12 2s10 4.48 10 10-4.48 10-10 10S2 17.52 2 12zm10 6c3.31 0 6-2.69 6-6s-2.69-6-6-6-6 2.69-6 6 2.69 6 6 6z" styleClass="icon" />
                               </graphic>
                            </Button>
-                           <Button  alignment="BASELINE_LEFT" graphicTextGap="20.0" mnemonicParsing="false"  prefHeight="50.0" prefWidth="271.0" styleClass="drawer-item" text="用户管理">
+                           <Button  alignment="BASELINE_LEFT" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#studentClicked" prefHeight="50.0" prefWidth="271.0" styleClass="drawer-item" text="学生管理">
                               <graphic>
                                  <SVGPath content="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" styleClass="icon" />
                               </graphic>
                            </Button>
-
-                           <TitledPane fx:id="charts" alignment="BASELINE_RIGHT" contentDisplay="RIGHT" expanded="false" graphicTextGap="20.0" layoutX="10.0" layoutY="130.0" nodeOrientation="RIGHT_TO_LEFT" styleClass="drawer-menu" text="图书统计">
-                              <content>
-                                 <VBox prefHeight="200.0" prefWidth="100.0" styleClass="drawer-content">
-                                    <Button layoutX="20.0" layoutY="164.0" nodeOrientation="LEFT_TO_RIGHT"  prefWidth="250" styleClass="drawer-item" text="图书分类统计" />
-                                 </VBox>
-                              </content>
-                              <graphic>
-                                 <SVGPath content="M11 2v20c-5.07-.5-9-4.79-9-10s3.93-9.5 9-10zm2.03 0v8.99H22c-.47-4.74-4.24-8.52-8.97-8.99zm0 11.01V22c4.74-.47 8.5-4.25 8.97-8.99h-8.97" styleClass="icon" />
-                              </graphic></TitledPane>
                         </children>
                      </VBox>
                   </content>
@@ -240,7 +225,7 @@
                      <children>
                         <ScrollPane fx:id="body" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" StackPane.alignment="TOP_LEFT">
                            <content>
-<!--                              <fx:include source="../profile/profile.fxml" />-->
+                              <fx:include source="../student/student.fxml" />
                            </content></ScrollPane>
                      </children>
                   </StackPane>
