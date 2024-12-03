@@ -84,7 +84,7 @@
                                           <String fx:value="login" />
                                        </styleClass>
                                     </Button>
-                                    <Label fx:id="lbl_error" styleClass="text-danger" text="用户名或密码不对." visible="false" />
+                                    <Label fx:id="lbl_error" styleClass="text-danger" text="学号或密码不对" visible="false" />
                                  </children>
                               </VBox>
                            </children>

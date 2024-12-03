@@ -29,22 +29,24 @@
                                 <Button layoutX="516.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"
                                         prefWidth="100.0" styleClass="btn-success" text="查询"/>
                                 <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"
-                                        styleClass="btn-primary" text="添加"/>
+                                        styleClass="btn-primary" onMouseClicked="#insertStudent" text="添加"/>
                                 <Button layoutX="406.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"
                                         prefWidth="100.0" styleClass="btn-info" text="修改"/>
                                 <Button layoutX="571.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"
                                         prefWidth="100.0" styleClass="btn-warning" text="删除"/>
                                 <Button layoutX="571.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"
-                                        prefWidth="100.0" styleClass="btn-secondary" text="借阅"/>
+                                        prefWidth="100.0" styleClass="btn-secondary" text="禁用"/>
                             </children>
                         </HBox>
                         <VBox>
                             <children>
                                 <TableView fx:id="studentTableView" prefHeight="600">
                                     <columns>
-                                        <TableColumn fx:id="id" text="学号"/>
+                                        <TableColumn fx:id="id" text="主键"/>
 
-                                        <TableColumn fx:id="name" text="姓名"/>
+                                        <TableColumn fx:id="user_name" text="学号"/>
+
+                                        <TableColumn fx:id="nick_name" text="姓名"/>
 
                                         <TableColumn fx:id="sex" text="性别"/>
 

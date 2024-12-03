@@ -25,6 +25,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -110,10 +112,10 @@ public class LoginController implements Initializable {
         pulse.play();
         if(validPassword() && validUsername())
             enter();
-        else {
-            // 输入不合法时显示错误提示
-            lbl_password.setVisible(true);
+        else if (ObjectUtils.isEmpty(username) || StringUtils.isEmpty(username.getText())){
             lbl_username.setVisible(true);
+        }else {
+            lbl_password.setVisible(true);
         }
     }
 
@@ -123,16 +125,19 @@ public class LoginController implements Initializable {
         lbl_username.setVisible(false);
         lbl_password.setVisible(false);
         if (login == LoginRole.STUDENT){
+            lbl_error.setText(AccountNameConstant.STUDENT_ID + "或者密码不对");
             username.setPromptText(AccountNameConstant.STUDENT_ID);
             lbl_username.setText(AccountNameConstant.STUDENT_ID + MessageConstant.VITIATION);
             loginRole =LoginRole.STUDENT;
         }
         if (login == LoginRole.ADMIN){
+            lbl_error.setText(AccountNameConstant.ADMIN + "或者密码不对");
             username.setPromptText(AccountNameConstant.ADMIN);
             lbl_username.setText(AccountNameConstant.ADMIN + MessageConstant.VITIATION);
             loginRole = LoginRole.ADMIN;
         }
         if (login == LoginRole.SERVICE){
+            lbl_error.setText(AccountNameConstant.WORK_ID + "或者密码不对");
             username.setPromptText(AccountNameConstant.WORK_ID);
             lbl_username.setText(AccountNameConstant.WORK_ID + MessageConstant.VITIATION);
             loginRole = LoginRole.SERVICE;
@@ -146,9 +151,11 @@ public class LoginController implements Initializable {
         User user = new User();
         user.setUserName(username.getText());
         user.setPassword(password.getText());
+        lbl_username.setVisible(false);
+        lbl_password.setVisible(false);
         if (!userService.login(loginRole,user)){
-            lbl_password.setVisible(true);
-            lbl_username.setVisible(true);
+            // 输入有效时隐藏错误提示
+            lbl_error.setVisible(true);
             return;
         }
         SpringUtils.getBean(StageManager.class).switchScene(FxmlView.MAIN);
