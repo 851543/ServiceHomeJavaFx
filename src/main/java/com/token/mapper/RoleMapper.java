@@ -20,4 +20,6 @@ public interface RoleMapper {
      * @return
      */
     List<String> getByRolesUserName(String userName);
+
+    void insertUserRole(@Param("roleId") Long roleId, @Param("userId") Long userId);
 }

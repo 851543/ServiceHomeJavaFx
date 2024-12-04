@@ -69,7 +69,7 @@
         </where>
     </sql>
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into user(user_name, nick_name, email, phone_number, sex, avatar, password, status, del_flag, create_by, create_time, update_by, update_time) values
         (#{userName}, #{nickName}, #{email}, #{phoneNumber}, #{sex}, #{avatar}, #{password}, #{status}, #{delFlag}, #{createBy}, #{createTime}, #{updateBy}, #{updateTime})
     </insert>

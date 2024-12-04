@@ -1,6 +1,9 @@
 package com.token.controller;
 
 import com.token.entity.User;
+import com.token.eunms.UserRole;
+import com.token.service.UserService;
+import com.token.utils.ServiceHomeUtils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,8 +15,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.net.URL;
@@ -26,7 +32,7 @@ public class StudentEditController implements Initializable {
     private TextField idField;
 
     @FXML
-    private TextField userNameField;
+    private TextField nameField;
 
     @FXML
     private TextField nickNameField;
@@ -43,6 +49,9 @@ public class StudentEditController implements Initializable {
     @FXML
     private ComboBox statusField;
 
+    @FXML
+    private TextField userInfoError;
+
     private Stage stage;
 
     private TableView<User> studentTableView;
@@ -51,6 +60,12 @@ public class StudentEditController implements Initializable {
 
     private User user;
 
+    @Autowired
+    private UserService userService;
+
+    @Value(value = "${token.local.file.path}")
+    private String localPath;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -58,12 +73,52 @@ public class StudentEditController implements Initializable {
     }
 
     @FXML
-    private void addOrEditUser(){
+    private void addOrEditUser() {
+        if (ObjectUtils.isEmpty(user)) {
+            userInfo(user);
+            userService.insert(UserRole.SERVICE, user);
+        }
+    }
 
+
+    private void userInfo(User user) {
+        boolean validate = userValidate();
+        if (validate) {
+            userInfoError.setVisible(true);
+            return;
+        }
+        user.setUserName(nameField.getText());
+        user.setNickName(nickNameField.getText());
+        user.setSex(ServiceHomeUtils.sexType(sexField.getValue()));
+        user.setPhoneNumber(phoneField.getText());
+        user.setAvatar(ServiceHomeUtils.avatarImage(avatarField, localPath));
+        user.setStatus(ServiceHomeUtils.statusType(statusField.getValue()));
+    }
+
+    private boolean userValidate() {
+        if (StringUtils.isEmpty(nameField.getText())) {
+            userInfoError.setText("你的学号为空");
+            return true;
+        } else if (!ObjectUtils.isEmpty(userService.selectName(nameField.getText()))) {
+            userInfoError.setText("你的学号已经存在");
+            return true;
+        }
+        if (StringUtils.isEmpty(nameField.getText())) {
+            userInfoError.setText("你的姓名为空");
+            return true;
+        }
+        if (StringUtils.isEmpty(nameField.getText())) {
+            userInfoError.setText("你的手机号为空");
+            return true;
+        } else if (ServiceHomeUtils.phoneValidate(nameField.getText())) {
+            userInfoError.setText("你的手机号格式不对");
+            return true;
+        }
+        return false;
     }
 
     @FXML
-    private void imagePicker(){
+    private void imagePicker() {
         File file = new FileChooser().showOpenDialog(avatarField.getScene().getWindow());
         if (!ObjectUtils.isEmpty(file)) {
             avatarField.setImage(new Image(file.toURI().toString()));
@@ -71,7 +126,7 @@ public class StudentEditController implements Initializable {
     }
 
     @FXML
-    private void closeView(){
+    private void closeView() {
         this.stage.close();
     }
 

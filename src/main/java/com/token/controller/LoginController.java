@@ -8,7 +8,7 @@ import com.token.constant.AccountNameConstant;
 import com.token.constant.MessageConstant;
 import com.token.entity.User;
 import com.token.eunms.FxmlView;
-import com.token.eunms.LoginRole;
+import com.token.eunms.UserRole;
 import com.token.fx.StageManager;
 import com.token.service.UserService;
 import com.token.utils.SpringUtils;
@@ -57,7 +57,7 @@ public class LoginController implements Initializable {
     @Autowired
     private UserService userService;
 
-    private LoginRole loginRole = LoginRole.STUDENT;
+    private UserRole loginRole = UserRole.STUDENT;
 
     private RotateTransition rotateTransition = new RotateTransition(); // 旋转动画
 
@@ -87,17 +87,17 @@ public class LoginController implements Initializable {
      */
     @FXML
     private void studentClick(){
-        LoginSwitch(LoginRole.STUDENT);
+        LoginSwitch(UserRole.STUDENT);
     }
 
     @FXML
     private void adminClick(){
-        LoginSwitch(LoginRole.ADMIN);
+        LoginSwitch(UserRole.ADMIN);
     }
 
     @FXML
     private void serviceClick(){
-        LoginSwitch(LoginRole.SERVICE);
+        LoginSwitch(UserRole.SERVICE);
     }
 
 
@@ -119,28 +119,28 @@ public class LoginController implements Initializable {
         }
     }
 
-    private void LoginSwitch(LoginRole login){
+    private void LoginSwitch(UserRole login){
         username.getParent().setStyle("-icon-color : -dark-gray; -fx-border-color : transparent");
         password.getParent().setStyle("-icon-color : -dark-gray; -fx-border-color : transparent");
         lbl_username.setVisible(false);
         lbl_password.setVisible(false);
-        if (login == LoginRole.STUDENT){
+        if (login == UserRole.STUDENT){
             lbl_error.setText(AccountNameConstant.STUDENT_ID + "或者密码不对");
             username.setPromptText(AccountNameConstant.STUDENT_ID);
             lbl_username.setText(AccountNameConstant.STUDENT_ID + MessageConstant.VITIATION);
-            loginRole =LoginRole.STUDENT;
+            loginRole = UserRole.STUDENT;
         }
-        if (login == LoginRole.ADMIN){
+        if (login == UserRole.ADMIN){
             lbl_error.setText(AccountNameConstant.ADMIN + "或者密码不对");
             username.setPromptText(AccountNameConstant.ADMIN);
             lbl_username.setText(AccountNameConstant.ADMIN + MessageConstant.VITIATION);
-            loginRole = LoginRole.ADMIN;
+            loginRole = UserRole.ADMIN;
         }
-        if (login == LoginRole.SERVICE){
+        if (login == UserRole.SERVICE){
             lbl_error.setText(AccountNameConstant.WORK_ID + "或者密码不对");
             username.setPromptText(AccountNameConstant.WORK_ID);
             lbl_username.setText(AccountNameConstant.WORK_ID + MessageConstant.VITIATION);
-            loginRole = LoginRole.SERVICE;
+            loginRole = UserRole.SERVICE;
         }
     }
 

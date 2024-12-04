@@ -8,4 +8,7 @@
         where user_name = #{userName}
         and c.status = 0
     </select>
+    <insert id="insertUserRole">
+        insert into user_role(user_id,role_id) value(#{userId},#{roleId})
+    </insert>
 </mapper>

@@ -14,7 +14,7 @@
     <version>0.0.1</version>
 
     <name>ServiceHome</name>
-    <description>JavaFx维修之家</description>
+    <description>JavaFx</description>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -40,6 +40,41 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.2.1</version>
+        </dependency>
+
+        <!--    mvn install:install-file -DgroupId=gn -DartifactId=GNCalendar -Dversion=v1.0 -Dpackaging=jar -Dfile=E:\idea\project\Java\ServiceHomeJavaFx\lib\GNCalendar-1.0-alpha.jar-->
+
+        <!--    mvn install:install-file -DgroupId=gn -DartifactId=GNButton -Dversion=v1.1.0 -Dpackaging=jar -Dfile=E:\idea\project\Java\ServiceHomeJavaFx\lib\GNButton-1.1.0.jar-->
+
+        <!--    mvn install:install-file -DgroupId=gn -DartifactId=GNCarousel -Dversion=v2.1.5 -Dpackaging=jar -Dfile=E:\idea\project\Java\ServiceHomeJavaFx\lib\GNCarousel-2.1.5.jar-->
+
+        <!--    mvn install:install-file -DgroupId=gn -DartifactId=GNDecorator -Dversion=v2.1.2-alpha -Dpackaging=jar -Dfile=E:\idea\project\Java\ServiceHomeJavaFx\lib\GNDecorator-2.1.2-alpha.jar-->
+
+        <!--    mvn install:install-file -DgroupId=gn -DartifactId=GNAvatarView -Dversion=v1.0-rc -Dpackaging=jar -Dfile=E:\idea\project\Java\ServiceHomeJavaFx\lib\GNAvatarView-1.0-rc.jar-->
+        <dependency>
+            <groupId>gn</groupId>
+            <artifactId>GNAvatarView</artifactId>
+            <version>v1.0-rc</version>
+        </dependency>
+        <dependency>
+            <groupId>gn</groupId>
+            <artifactId>GNButton</artifactId>
+            <version>v1.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>gn</groupId>
+            <artifactId>GNCalendar</artifactId>
+            <version>v1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>gn</groupId>
+            <artifactId>GNCarousel</artifactId>
+            <version>v2.1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>gn</groupId>
+            <artifactId>GNDecorator</artifactId>
+            <version>v2.1.2-alpha</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.jfoenix/jfoenix -->
@@ -68,13 +103,27 @@
         </dependency>
     </dependencies>
 
-
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>io.github.fvarrui</groupId>
+                <artifactId>javapackager</artifactId>
+                <version>1.7.5</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.token.SpringJavaFxApplication</mainClass>
+                            <bundleJre>true</bundleJre>
+                            <jrePath>D:\Java\jdk-8\jre</jrePath>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
+
 </project>
