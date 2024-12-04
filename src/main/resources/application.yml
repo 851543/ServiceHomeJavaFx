@@ -29,9 +29,3 @@ mybatis-plus:
   type-aliases-package: com.token.entity
   configuration:
     map-underscore-to-camel-case: true
-
-token:
-  # 本地存储
-  local:
-    file:
-      path: ${token.local.file.path}

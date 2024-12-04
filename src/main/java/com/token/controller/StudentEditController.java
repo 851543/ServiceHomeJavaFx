@@ -2,12 +2,15 @@ package com.token.controller;
 
 import com.token.entity.User;
 import com.token.eunms.UserRole;
+import com.token.fx.utils.Alerts;
 import com.token.service.UserService;
 import com.token.utils.ServiceHomeUtils;
+import com.token.utils.SpringUtils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -18,6 +21,7 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
@@ -25,7 +29,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-@Component
+@Controller
 public class StudentEditController implements Initializable {
 
     @FXML
@@ -50,7 +54,7 @@ public class StudentEditController implements Initializable {
     private ComboBox statusField;
 
     @FXML
-    private TextField userInfoError;
+    private Label userInfoError;
 
     private Stage stage;
 
@@ -60,13 +64,6 @@ public class StudentEditController implements Initializable {
 
     private User user;
 
-    @Autowired
-    private UserService userService;
-
-    @Value(value = "${token.local.file.path}")
-    private String localPath;
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -74,24 +71,35 @@ public class StudentEditController implements Initializable {
 
     @FXML
     private void addOrEditUser() {
-        if (ObjectUtils.isEmpty(user)) {
-            userInfo(user);
-            userService.insert(UserRole.SERVICE, user);
+        try{
+            if (ObjectUtils.isEmpty(this.user)) {
+                boolean validate = userValidate();
+                if (validate) {
+                    userInfoError.setVisible(true);
+                    return;
+                }
+                User user = new User();
+                userInfo(user);
+                SpringUtils.getBean(UserService.class).insert(UserRole.STUDENT, user);
+            }else {
+
+            }
+            stage.close();
+            Alerts.success("成功", "操作成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            stage.close();
+            Alerts.error("失败","操作失败");
         }
     }
 
 
     private void userInfo(User user) {
-        boolean validate = userValidate();
-        if (validate) {
-            userInfoError.setVisible(true);
-            return;
-        }
         user.setUserName(nameField.getText());
         user.setNickName(nickNameField.getText());
         user.setSex(ServiceHomeUtils.sexType(sexField.getValue()));
         user.setPhoneNumber(phoneField.getText());
-        user.setAvatar(ServiceHomeUtils.avatarImage(avatarField, localPath));
+        user.setAvatar(ServiceHomeUtils.avatarImage(avatarField));
         user.setStatus(ServiceHomeUtils.statusType(statusField.getValue()));
     }
 
@@ -99,18 +107,18 @@ public class StudentEditController implements Initializable {
         if (StringUtils.isEmpty(nameField.getText())) {
             userInfoError.setText("你的学号为空");
             return true;
-        } else if (!ObjectUtils.isEmpty(userService.selectName(nameField.getText()))) {
+        } else if (!ObjectUtils.isEmpty(SpringUtils.getBean(UserService.class).selectName(nameField.getText()))) {
             userInfoError.setText("你的学号已经存在");
             return true;
         }
-        if (StringUtils.isEmpty(nameField.getText())) {
+        if (StringUtils.isEmpty(nickNameField.getText())) {
             userInfoError.setText("你的姓名为空");
             return true;
         }
-        if (StringUtils.isEmpty(nameField.getText())) {
+        if (StringUtils.isEmpty(phoneField.getText())) {
             userInfoError.setText("你的手机号为空");
             return true;
-        } else if (ServiceHomeUtils.phoneValidate(nameField.getText())) {
+        } else if (!ServiceHomeUtils.phoneValidate(phoneField.getText())) {
             userInfoError.setText("你的手机号格式不对");
             return true;
         }

@@ -43,7 +43,7 @@ public class StageManager {
 	/**
 	 * 装饰器对象
 	 */
-	private final GNDecorator decorator;
+	private static GNDecorator decorator;
 
 	/**
 	 * 构造函数
@@ -140,5 +140,12 @@ public class StageManager {
 	 */
 	public void showDecorator() {
 		decorator.show();
+	}
+
+	/**
+	 * 获取装饰器
+	 */
+	public static GNDecorator getDecorator(){
+		return decorator;
 	}
 }

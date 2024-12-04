@@ -8,6 +8,3 @@ token:
     database: service-home
     username: root
     password: 1314520ok
-  local:
-    file:
-      path: "D:\\token\\file"

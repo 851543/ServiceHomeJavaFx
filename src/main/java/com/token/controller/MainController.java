@@ -28,6 +28,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.SVGPath;
 import org.controlsfx.control.PopOver;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,7 +39,7 @@ import java.util.ResourceBundle;
  * @author 阿俊
  * @description
  */
-@Component
+@Controller
 public class MainController implements Initializable {
     @FXML
     public ScrollPane body;

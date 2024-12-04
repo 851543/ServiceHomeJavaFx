@@ -58,7 +58,7 @@
                                           <String fx:value="启用"/>
                                       </value>
                                   </ComboBox>
-                                  <Label fx:id="userInfoError" styleClass="text-danger" text="你输入的用户信息错误" visible="false" />
+                                  <Label fx:id="userInfoError" GridPane.columnIndex="1" GridPane.rowIndex="6" styleClass="text-danger" text="你输入的用户信息错误" visible="false" />
                               </children>
                           </GridPane>
 
