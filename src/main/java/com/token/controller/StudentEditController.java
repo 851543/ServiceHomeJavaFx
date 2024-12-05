@@ -66,7 +66,7 @@ public class StudentEditController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        // test
     }
 
     @FXML
