@@ -3,8 +3,8 @@
 <mapper namespace="com.token.mapper.RoleMapper">
     <select id="getByRolesUserName" resultType="java.lang.String">
         select role_name from user as a
-        right join user_role as b on a.id = b.user_id
-        right join role as c on b.role_id = c.id
+        left join user_role as b on a.id = b.user_id
+        left join role as c on b.role_id = c.id
         where user_name = #{userName}
         and c.status = 0
     </select>

@@ -1,5 +1,7 @@
 package com.token.utils;
 
+import com.token.entity.User;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.ImageView;
 import org.slf4j.Logger;
@@ -18,17 +20,7 @@ public class ServiceHomeUtils {
 
     private static final String localPath = "D:\\token\\file";
 
-    public static String sexType(Object sex) {
-        return sex.toString().equals("男") ? "0" : "1";
-    }
-
-    public static boolean phoneValidate(String phone) {
-        return Pattern.matches("^1[3-9]\\d{9}$", phone);
-    }
-
-    public static String statusType(Object status) {
-        return status.toString().equals("启用") ? "0" : "1";
-    }
+    private static User user;
 
     public static String avatarImage(ImageView image) {
         log.info("文件本地存储:{}", image);
@@ -48,11 +40,31 @@ public class ServiceHomeUtils {
         String fileLocalPath = localPath + "\\" + fileName;
         try {
             ImageIO.write(bImage, extension, new File(fileLocalPath));
-            log.error("文件存储成功:{}", fileLocalPath);
+            log.info("文件存储成功:{}", fileLocalPath);
             return fileLocalPath;
         }catch (IOException e){
             log.error("io流转换失败:{}", e);
         }
         return "";
+    }
+
+    public static String sexType(Object sex) {
+        return sex.toString().equals("男") ? "0" : "1";
+    }
+
+    public static boolean phoneValidate(String phone) {
+        return Pattern.matches("^1[3-9]\\d{9}$", phone);
+    }
+
+    public static String statusType(Object status) {
+        return status.toString().equals("启用") ? "0" : "1";
+    }
+
+    public static void setLoginUserInfo(User loginUser){
+        user = loginUser;
+    }
+
+    public static User getLoginUserInfo(){
+        return user;
     }
 }

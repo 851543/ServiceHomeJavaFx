@@ -13,10 +13,9 @@ public interface UserService {
     /**
      * 用户登录
      *
-     * @param user
      * @return
      */
-    boolean login(UserRole loginRole, User user);
+    void login(User user);
 
     /**
      * 新增用户
@@ -36,4 +35,12 @@ public interface UserService {
      * 查询学号
      */
     User selectName(String name);
+
+    /**
+     * 指定用户角色集合
+     * @param role
+     * @param user
+     * @return
+     */
+    List<User> userRoleList(UserRole role,User user);
 }

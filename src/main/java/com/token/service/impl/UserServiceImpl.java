@@ -6,6 +6,7 @@ import com.token.eunms.UserRole;
 import com.token.mapper.RoleMapper;
 import com.token.mapper.UserMapper;
 import com.token.service.UserService;
+import com.token.utils.ServiceHomeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,23 +27,11 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 用户登录
-     * @param userDTO
      * @return
      */
     @Override
-    public boolean login(UserRole loginRole, User userDTO) {
-        if (!userEmptyCheck(userDTO)){
-            return false;
-        }
-        String pws = userDTO.getPassword();
-        userDTO.setPassword(null);
-        User user = userMapper.getUserByUser(userDTO);
-        if (ObjectUtils.isEmpty(user) || StringUtils.isEmpty(user.getUserName())){
-            return false;
-        }
-        if (!roleMapper.getByRolesUserName(userDTO.getUserName()).stream().anyMatch(role -> role.equals(getRole(loginRole)))) return false;
-        if (!user.getPassword().equals(DigestUtils.md5DigestAsHex(pws.getBytes()))) return false;
-        return true;
+    public void login(User user) {
+        ServiceHomeUtils.setLoginUserInfo(user);
     }
 
     /**
@@ -79,6 +68,17 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 指定用户角色集合
+     * @param role
+     * @param user
+     * @return
+     */
+    @Override
+    public List<User> userRoleList(UserRole role, User user) {
+        return  null;
+    }
+
+    /**
      * 设置用户角色
      * @param loginRole
      */
@@ -86,43 +86,15 @@ public class UserServiceImpl implements UserService {
         switch (loginRole){
             case ADMIN:
                 roleMapper.insertUserRole(loginRole.ADMIN.getId(),userId);
+                break;
             case STUDENT:
                 roleMapper.insertUserRole(loginRole.STUDENT.getId(),userId);
+                break;
             case SERVICE:
                 roleMapper.insertUserRole(loginRole.SERVICE.getId(),userId);
+                break;
             default:
                 break;
         }
-    }
-
-    /**
-     * 获取角色
-     * @param loginRole
-     * @return
-     */
-    private String getRole(UserRole loginRole){
-        switch (loginRole){
-            case ADMIN:
-                return  "admin";
-            case STUDENT:
-                return  "student";
-            case SERVICE:
-                return  "service";
-            default:
-                break;
-        }
-        return "";
-    }
-
-    /**
-     * 用户校验
-     * @param userDTO
-     * @return
-     */
-    private boolean userEmptyCheck(User userDTO){
-        if (ObjectUtils.isEmpty(userDTO) || StringUtils.isEmpty(userDTO.getUserName())){
-            return false;
-        }
-        return true;
     }
 }

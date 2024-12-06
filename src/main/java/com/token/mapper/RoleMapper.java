@@ -15,11 +15,16 @@ import java.util.List;
 public interface RoleMapper {
 
     /**
-     * 根据用户名查询用户角色
+     * 根据用户名查询用户角色数据
      *
      * @return
      */
     List<String> getByRolesUserName(String userName);
 
+    /**
+     * 绑定用户角色数据
+     * @param roleId
+     * @param userId
+     */
     void insertUserRole(@Param("roleId") Long roleId, @Param("userId") Long userId);
 }

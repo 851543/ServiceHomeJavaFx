@@ -1,9 +1,10 @@
 package com.token.controller;
 
-import com.alibaba.druid.pool.vendor.NullExceptionSorter;
 import com.gn.App;
 import com.token.entity.User;
+import com.token.eunms.UserRole;
 import com.token.service.UserService;
+import com.token.utils.SpringUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,7 +19,6 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
@@ -26,6 +26,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 @Controller
 public class StudentController implements Initializable {
@@ -57,9 +58,7 @@ public class StudentController implements Initializable {
     @FXML
     private TableColumn<User, LocalDateTime> createTime;
 
-    @Autowired
-    private UserService userService;
-
+    private boolean initializeUserList = true;
 
     ObservableList<User> userObservableList = FXCollections.observableArrayList();
 
@@ -74,13 +73,8 @@ public class StudentController implements Initializable {
         avatar.setCellValueFactory(new PropertyValueFactory<>("avatar"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         createTime.setCellValueFactory(new PropertyValueFactory<>("createTime"));
-
-        try {
-            List<User> userList = userService.userList(null);
-            userObservableList.addAll(userList);
-        }catch (NullPointerException e){
-
-        }
+        if (initializeUserList) userObservableList.addAll(SpringUtils.getBean(UserService.class).userRoleList(UserRole.STUDENT,null));initializeUserList = false;
+        studentTableView.setItems(userObservableList);
     }
 
     @FXML

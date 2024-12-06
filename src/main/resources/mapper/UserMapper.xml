@@ -79,4 +79,14 @@
     <select id="getUserListByUser" resultType="com.token.entity.User">
         <include refid="selectUserVo" /><include refid="whereUserSearch" />
     </select>
+    <select id="getUserRoleListByUser" resultType="com.token.entity.User">
+        select * from user a
+        left join user_role b on a.id = b.user_id
+        left join role c on c.id = b.role_id
+        <include refid="whereUserSearch"></include>
+        having a.del_flag = 0
+        and c.del_flag = 0
+        and c.role_name = #{role}
+        order by a.create_time desc
+    </select>
 </mapper>

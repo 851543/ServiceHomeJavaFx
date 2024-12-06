@@ -10,6 +10,7 @@ import com.token.entity.User;
 import com.token.eunms.FxmlView;
 import com.token.eunms.UserRole;
 import com.token.fx.StageManager;
+import com.token.service.RoleService;
 import com.token.service.UserService;
 import com.token.utils.SpringUtils;
 import javafx.animation.RotateTransition;
@@ -25,6 +26,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.DigestUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
@@ -36,7 +39,7 @@ import java.util.ResourceBundle;
  * @author 阿俊
  * @description
  */
-@Component
+@Controller
 public class LoginController implements Initializable {
     @FXML
     private GNAvatarView avatar; // 头像视图
@@ -57,7 +60,12 @@ public class LoginController implements Initializable {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoleService roleService;
+
     private UserRole loginRole = UserRole.STUDENT;
+
+    private User loginUser;
 
     private RotateTransition rotateTransition = new RotateTransition(); // 旋转动画
 
@@ -148,17 +156,50 @@ public class LoginController implements Initializable {
      * 处理登录操作
      */
     private void enter() {
-        User user = new User();
-        user.setUserName(username.getText());
-        user.setPassword(password.getText());
         lbl_username.setVisible(false);
         lbl_password.setVisible(false);
-        if (!userService.login(loginRole,user)){
+        boolean validate = loginValidate();
+        if (validate){
             // 输入有效时隐藏错误提示
             lbl_error.setVisible(true);
             return;
         }
+        userService.login(loginUser);
         SpringUtils.getBean(StageManager.class).switchScene(FxmlView.MAIN);
+    }
+
+    /**
+     * 登陆校验
+     */
+    private boolean loginValidate() {
+        User user = userService.selectName(username.getText());
+        if (ObjectUtils.isEmpty(user) || StringUtils.isEmpty(user.getUserName())){
+            return true;
+        }
+        String pws = password.getText();
+        if (!roleService.selectRolesUserName(user.getUserName()).stream().anyMatch(role -> role.equals(getRole(loginRole)))) return true;
+        if (!user.getPassword().equals(DigestUtils.md5DigestAsHex(pws.getBytes()))) return true;
+        this.loginUser = user;
+        return false;
+    }
+
+    /**
+     * 获取角色
+     * @param loginRole
+     * @return
+     */
+    private String getRole(UserRole loginRole){
+        switch (loginRole){
+            case ADMIN:
+                return  "admin";
+            case STUDENT:
+                return  "student";
+            case SERVICE:
+                return  "service";
+            default:
+                break;
+        }
+        return "";
     }
 
     /**

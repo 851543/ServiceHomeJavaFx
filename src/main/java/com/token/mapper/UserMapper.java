@@ -1,7 +1,9 @@
 package com.token.mapper;
 
+import com.token.annotation.AutoFill;
 import com.token.entity.Role;
 import com.token.entity.User;
+import com.token.eunms.OperationType;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,6 +20,7 @@ public interface UserMapper {
      * 新增用户数据
      * @param user
      */
+    @AutoFill(OperationType.INSERT)
     void insert(User user);
 
     /**
@@ -33,4 +36,7 @@ public interface UserMapper {
      * @return
      */
     List<User> getUserListByUser(User user);
+
+
+    List<User> getUserRoleListByUser();
 }
