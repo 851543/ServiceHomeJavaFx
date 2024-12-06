@@ -1,6 +1,7 @@
 package com.token.service;
 
 import com.token.entity.User;
+import com.token.entity.dto.UserRoleListDTO;
 import com.token.eunms.UserRole;
 
 import java.util.List;
@@ -38,9 +39,8 @@ public interface UserService {
 
     /**
      * 指定用户角色集合
-     * @param role
-     * @param user
+     * @param userRoleListDTO
      * @return
      */
-    List<User> userRoleList(UserRole role,User user);
+    List<User> userRoleList(UserRoleListDTO userRoleListDTO);
 }

@@ -2,6 +2,7 @@ package com.token.service.impl;
 
 import com.token.constant.DefaultPassword;
 import com.token.entity.User;
+import com.token.entity.dto.UserRoleListDTO;
 import com.token.eunms.UserRole;
 import com.token.mapper.RoleMapper;
 import com.token.mapper.UserMapper;
@@ -69,13 +70,12 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 指定用户角色集合
-     * @param role
-     * @param user
+     * @param userRoleListDTO
      * @return
      */
     @Override
-    public List<User> userRoleList(UserRole role, User user) {
-        return  null;
+    public List<User> userRoleList(UserRoleListDTO userRoleListDTO) {
+        return  userMapper.getUserRoleListByUser(userRoleListDTO);
     }
 
     /**

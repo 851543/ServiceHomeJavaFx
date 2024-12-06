@@ -42,7 +42,7 @@
                             <children>
                                 <TableView fx:id="studentTableView" prefHeight="600">
                                     <columns>
-                                        <TableColumn fx:id="id" text="主键"/>
+                                        <TableColumn fx:id="id" text="主键" visible="false"/>
 
                                         <TableColumn fx:id="user_name" text="学号"/>
 

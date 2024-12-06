@@ -80,6 +80,7 @@ public class StudentEditController implements Initializable {
                 User user = new User();
                 userInfo(user);
                 SpringUtils.getBean(UserService.class).insert(UserRole.STUDENT, user);
+                userObservableList.add(user);
             }else {
 
             }

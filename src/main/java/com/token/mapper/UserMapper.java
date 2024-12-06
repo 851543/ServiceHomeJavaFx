@@ -3,6 +3,7 @@ package com.token.mapper;
 import com.token.annotation.AutoFill;
 import com.token.entity.Role;
 import com.token.entity.User;
+import com.token.entity.dto.UserRoleListDTO;
 import com.token.eunms.OperationType;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -37,6 +38,10 @@ public interface UserMapper {
      */
     List<User> getUserListByUser(User user);
 
-
-    List<User> getUserRoleListByUser();
+    /**
+     * 指定用户角色数据集合
+     * @param userRoleListDTO
+     * @return
+     */
+    List<User> getUserRoleListByUser(UserRoleListDTO userRoleListDTO);
 }

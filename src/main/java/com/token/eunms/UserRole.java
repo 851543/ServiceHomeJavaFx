@@ -7,7 +7,7 @@ package com.token.eunms;
  * @description
  */
 public enum UserRole {
-    STUDENT(1L, "student"), ADMIN(0L, "admin"), SERVICE(2L, "service");
+    STUDENT(2L, "student"), ADMIN(1L, "admin"), SERVICE(3L, "service");
 
     private final Long id;
 
