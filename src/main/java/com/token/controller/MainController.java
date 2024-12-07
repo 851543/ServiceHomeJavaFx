@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.token.eunms.FxmlView;
+import com.token.fx.SpringFXMLLoader;
 import com.token.fx.StageManager;
 import com.token.utils.SpringUtils;
 import javafx.beans.value.ChangeListener;
@@ -41,13 +42,57 @@ import java.util.ResourceBundle;
  */
 @Controller
 public class MainController implements Initializable {
+
     @FXML
-    public ScrollPane body;
+    private ScrollPane body;
+
     @FXML
-    public Label title;
+    private Label title;
+
+    @FXML
+    private JFXButton config;
+
+    private Parent popContent;
+
+    public static final PopOver popConfig = new PopOver();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        loadContentPopup();
+    }
+
+    @FXML
+    private void openConfig() {
+        if (popConfig.isShowing()) {
+            popConfig.hide();
+        } else {
+            popConfig.show(config, 0);
+            popConfig.getRoot().setFocusTraversable(true);
+        }
+    }
+
+    private void loadContentPopup() {
+        try {
+            popContent = SpringUtils.getBean(SpringFXMLLoader.class).load("/template/main/config.fxml");
+            popConfig.getRoot().getStylesheets().add(getClass().getResource("/styles/css/poplight.css").toExternalForm());
+            popConfig.setContentNode(popContent);
+            popConfig.setArrowLocation(PopOver.ArrowLocation.TOP_RIGHT);
+            popConfig.setArrowIndent(0);
+            popConfig.setArrowSize(0);
+            popConfig.setCornerRadius(0);
+            popConfig.setAutoFix(true);
+            popConfig.setAnimated(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Parent getPopContent() {
+        return popContent;
+    }
+
+    public void setPopContent(Parent popContent) {
+        this.popContent = popContent;
     }
 
     @FXML

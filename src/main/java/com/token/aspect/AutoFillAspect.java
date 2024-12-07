@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Component
 public class AutoFillAspect {
 
-    protected Logger log = LoggerFactory.getLogger(AutoFillAspect.class);
+    private Logger log = LoggerFactory.getLogger(AutoFillAspect.class);
 
     @Pointcut("execution(* com.token.mapper.*.*(..)) && @annotation(com.token.annotation.AutoFill))")
     public void autoFillPointcut() {
@@ -49,18 +49,18 @@ public class AutoFillAspect {
         String id = ServiceHomeUtils.getLoginUserInfo().getId().toString();
 
         try {
-            Method DEL_FLAG = entity.getClass().getDeclaredMethod(AutoFillConstant.DEL_FLAG, String.class);
-            DEL_FLAG.invoke(entity,"0");
             if (operationType == OperationType.INSERT) {
                 Method CREATE_BY = entity.getClass().getDeclaredMethod(AutoFillConstant.CREATE_BY, String.class);
                 Method CREATE_TIME = entity.getClass().getDeclaredMethod(AutoFillConstant.CREATE_TIME, LocalDateTime.class);
                 Method UPDATE_BY = entity.getClass().getDeclaredMethod(AutoFillConstant.UPDATE_BY, String.class);
                 Method UPDATE_TIME = entity.getClass().getDeclaredMethod(AutoFillConstant.UPDATE_TIME, LocalDateTime.class);
+                Method DEL_FLAG = entity.getClass().getDeclaredMethod(AutoFillConstant.DEL_FLAG, String.class);
 
                 CREATE_BY.invoke(entity,id);
                 CREATE_TIME.invoke(entity,now);
                 UPDATE_BY.invoke(entity,id);
                 UPDATE_TIME.invoke(entity,now);
+                DEL_FLAG.invoke(entity,"0");
             }
 
             if (operationType == OperationType.UPDATE){

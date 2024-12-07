@@ -11,12 +11,14 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.ByteBuffer;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class ServiceHomeUtils {
 
-    protected static final Logger log = LoggerFactory.getLogger(ServiceHomeUtils.class);
+    private static final Logger log = LoggerFactory.getLogger(ServiceHomeUtils.class);
 
     private static final String localPath = "D:\\token\\file";
 
@@ -38,14 +40,24 @@ public class ServiceHomeUtils {
         String fileName = UUID.randomUUID() + "." + extension;
         // 本地存放路径
         String fileLocalPath = localPath + "\\" + fileName;
-        try {
-            ImageIO.write(bImage, extension, new File(fileLocalPath));
-            log.info("文件存储成功:{}", fileLocalPath);
-            return fileLocalPath;
-        }catch (IOException e){
-            log.error("io流转换失败:{}", e);
-        }
-        return "";
+        Runnable uploadTask  = ()->{
+            try {
+                ImageIO.write(bImage, extension, new File(fileLocalPath));
+            } catch (IOException e) {
+                log.error("文件存储失败:{}", fileLocalPath);
+            }
+        };
+        new Thread(uploadTask).start();
+        log.info("文件存储成功:{}", fileLocalPath);
+        return fileLocalPath;
+    }
+
+    public static String setStatusType(String status) {
+        return status.equals("0") ? "正常" : "禁用";
+    }
+
+    public static String sexType(String sex) {
+        return sex.equals("0") ? "男" : "女";
     }
 
     public static String sexType(Object sex) {
@@ -56,7 +68,7 @@ public class ServiceHomeUtils {
         return Pattern.matches("^1[3-9]\\d{9}$", phone);
     }
 
-    public static String statusType(Object status) {
+    public static String setStatusType(Object status) {
         return status.toString().equals("启用") ? "0" : "1";
     }
 

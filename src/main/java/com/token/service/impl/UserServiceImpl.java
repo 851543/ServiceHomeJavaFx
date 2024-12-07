@@ -79,6 +79,15 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 修改用户
+     * @param user
+     */
+    @Override
+    public void update(User user) {
+        userMapper.update(user);
+    }
+
+    /**
      * 设置用户角色
      * @param loginRole
      */

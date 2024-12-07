@@ -16,12 +16,6 @@ public class UserRoleListDTO {
     @TableField(value="nick_name")
     private String nickName;
 
-    /**
-     * 帐号状态（0正常 1停用）
-     */
-    @TableField(value="status")
-    private String status;
-
     private String role;
 
     public String getUserName() {
@@ -38,14 +32,6 @@ public class UserRoleListDTO {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getRole() {

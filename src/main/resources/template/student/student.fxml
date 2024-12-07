@@ -15,11 +15,11 @@
                             <children>
                                 <Label prefHeight="30.0" prefWidth="40.0" style="-fx-text-fill: -text-color;"
                                        text="学号:"/>
-                                <TextField fx:id="bookNameField" layoutX="739.0" layoutY="18.0" prefHeight="30.0"
+                                <TextField fx:id="userNameField" layoutX="739.0" layoutY="18.0" prefHeight="30.0"
                                            prefWidth="151.0" promptText="学号" styleClass="rectangle"/>
                                 <Label prefHeight="30.0" prefWidth="40.0" style="-fx-text-fill: -text-color;"
                                        text="姓名:"/>
-                                <TextField fx:id="isbnField" prefHeight="30.0" prefWidth="151.0" promptText="姓名"
+                                <TextField fx:id="nickNameField" prefHeight="30.0" prefWidth="151.0" promptText="姓名"
                                            styleClass="rectangle"/>
                             </children>
                         </HBox>
@@ -27,15 +27,13 @@
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="478.0" spacing="10.0">
                             <children>
                                 <Button layoutX="516.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"
-                                        prefWidth="100.0" styleClass="btn-success" text="查询"/>
+                                        prefWidth="100.0" styleClass="btn-success" onMouseClicked="#selectStudent" text="查询"/>
                                 <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"
                                         styleClass="btn-primary" onMouseClicked="#insertStudent" text="添加"/>
                                 <Button layoutX="406.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"
-                                        prefWidth="100.0" styleClass="btn-info" text="修改"/>
+                                        prefWidth="100.0" styleClass="btn-info" onMouseClicked="#updateStudent" text="修改"/>
                                 <Button layoutX="571.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"
-                                        prefWidth="100.0" styleClass="btn-warning" text="删除"/>
-                                <Button layoutX="571.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"
-                                        prefWidth="100.0" styleClass="btn-secondary" text="禁用"/>
+                                        prefWidth="100.0" styleClass="btn-warning" onMouseClicked="#deleteStudent" text="删除"/>
                             </children>
                         </HBox>
                         <VBox>

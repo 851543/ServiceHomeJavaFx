@@ -171,7 +171,7 @@
                                           </StackPane>
                                        </control>
                                     </JFXBadge>
-                                    <JFXBadge fx:id="notifications" position="TOP_RIGHT" prefHeight="44.0" prefWidth="35.0" text="41">
+                                    <JFXBadge fx:id="notifications" position="TOP_RIGHT" prefHeight="44.0" prefWidth="35.0" visible="false">
                                        <styleClass>
                                           <String fx:value="icon" />
                                           <String fx:value="icon-warning" />
@@ -184,16 +184,7 @@
                                           </StackPane>
                                        </control>
                                     </JFXBadge>
-                                    <JFXBadge fx:id="messages" layoutX="759.0" layoutY="12.0" position="TOP_RIGHT" prefHeight="44.0" prefWidth="35.0" styleClass="icon" text="12">
-                                       <control>
-                                          <StackPane prefHeight="32.0" prefWidth="43.0" style="-fx-padding: 10;">
-                                             <children>
-                                                <FontAwesomeIconView glyphName="ENVELOPE" size="20" styleClass="icon" />
-                                             </children>
-                                          </StackPane>
-                                       </control>
-                                    </JFXBadge>
-                                    <JFXButton fx:id="config" contentDisplay="GRAPHIC_ONLY" prefHeight="83.0" prefWidth="40.0" ripplerFill="BLACK">
+                                    <JFXButton fx:id="config" contentDisplay="GRAPHIC_ONLY" onMouseClicked="#openConfig" prefHeight="83.0" prefWidth="40.0" ripplerFill="BLACK">
                                        <graphic>
                                           <SVGPath content="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#00000080" styleClass="icon" />
                                        </graphic>

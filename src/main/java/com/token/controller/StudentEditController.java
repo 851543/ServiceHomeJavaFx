@@ -18,6 +18,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -64,13 +66,16 @@ public class StudentEditController implements Initializable {
 
     private User user;
 
+    private Logger log = LoggerFactory.getLogger(StudentController.class);
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
 
     @FXML
     private void addOrEditUser() {
-        try{
+        try {
             if (ObjectUtils.isEmpty(this.user)) {
                 boolean validate = userValidate();
                 if (validate) {
@@ -81,15 +86,23 @@ public class StudentEditController implements Initializable {
                 userInfo(user);
                 SpringUtils.getBean(UserService.class).insert(UserRole.STUDENT, user);
                 userObservableList.add(user);
-            }else {
-
+            } else {
+                boolean validate = userValidate();
+                if (validate) {
+                    userInfoError.setVisible(true);
+                    return;
+                }
+                userInfo(this.user);
+                SpringUtils.getBean(UserService.class).update(user);
+                //刷新
+                studentTableView.refresh();
             }
             stage.close();
             Alerts.success("成功", "操作成功");
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             stage.close();
-            Alerts.error("失败","操作失败");
+            Alerts.error("失败", "操作失败");
         }
     }
 
@@ -100,7 +113,7 @@ public class StudentEditController implements Initializable {
         user.setSex(ServiceHomeUtils.sexType(sexField.getValue()));
         user.setPhoneNumber(phoneField.getText());
         user.setAvatar(ServiceHomeUtils.avatarImage(avatarField));
-        user.setStatus(ServiceHomeUtils.statusType(statusField.getValue()));
+        user.setStatus(ServiceHomeUtils.setStatusType(statusField.getValue()));
     }
 
     private boolean userValidate() {
@@ -127,7 +140,11 @@ public class StudentEditController implements Initializable {
 
     @FXML
     private void imagePicker() {
-        File file = new FileChooser().showOpenDialog(avatarField.getScene().getWindow());
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter imageFilter =
+                new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.jpeg", "*.png", "*.gif");
+        fileChooser.getExtensionFilters().add(imageFilter);
+        File file = fileChooser.showOpenDialog(avatarField.getScene().getWindow());
         if (!ObjectUtils.isEmpty(file)) {
             avatarField.setImage(new Image(file.toURI().toString()));
         }
@@ -169,7 +186,17 @@ public class StudentEditController implements Initializable {
     public void setUser(User user) {
         this.user = user;
         if (user != null) {
-            // TODO
+            idField.setId(user.getId().toString());
+            nameField.setText(user.getUserName());
+            nickNameField.setText(user.getNickName());
+            sexField.setValue(ServiceHomeUtils.sexType(user.getSex()));
+            phoneField.setText(user.getPhoneNumber());
+            try {
+                avatarField.setImage(new Image(new File(user.getAvatar()).toURI().toString()));
+            }catch (Exception e){
+                log.error(e.getMessage());
+            }
+            statusField.setValue(ServiceHomeUtils.setStatusType(user.getStatus()));
         }
     }
 

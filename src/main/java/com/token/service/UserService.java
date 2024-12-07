@@ -43,4 +43,11 @@ public interface UserService {
      * @return
      */
     List<User> userRoleList(UserRoleListDTO userRoleListDTO);
+
+    /**
+     * 修改用户
+     *
+     * @param user
+     */
+    void update(User user);
 }

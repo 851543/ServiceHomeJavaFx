@@ -1,6 +1,7 @@
 package com.token.mapper;
 
 import com.token.annotation.AutoFill;
+import com.token.annotation.AutoFormat;
 import com.token.entity.Role;
 import com.token.entity.User;
 import com.token.entity.dto.UserRoleListDTO;
@@ -44,4 +45,11 @@ public interface UserMapper {
      * @return
      */
     List<User> getUserRoleListByUser(UserRoleListDTO userRoleListDTO);
+
+    /**
+     * 修改用户
+     * @param user
+     */
+    @AutoFill(OperationType.UPDATE)
+    void update(User user);
 }
