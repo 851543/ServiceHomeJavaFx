@@ -1,6 +1,8 @@
 package com.token.utils;
 
 import com.token.entity.User;
+import com.token.eunms.FxmlView;
+import com.token.eunms.UserRole;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.ImageView;
@@ -23,6 +25,8 @@ public class ServiceHomeUtils {
     private static final String localPath = "D:\\token\\file";
 
     private static User user;
+
+    private static UserRole changeRole;
 
     public static String avatarImage(ImageView image) {
         log.info("文件本地存储:{}", image);
@@ -78,5 +82,13 @@ public class ServiceHomeUtils {
 
     public static User getLoginUserInfo(){
         return user;
+    }
+
+    public static UserRole getChangeRole() {
+        return changeRole;
+    }
+
+    public static void setChangeRole(UserRole changeRole) {
+        ServiceHomeUtils.changeRole = changeRole;
     }
 }

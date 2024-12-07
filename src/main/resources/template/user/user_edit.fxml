@@ -12,7 +12,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.text.Font?>
-<StackPane prefHeight="620.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.token.controller.StudentEditController">
+<StackPane prefHeight="620.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.token.controller.UserEditController">
     <children>
         <VBox alignment="CENTER" spacing="10.0">
             <children>
@@ -22,7 +22,7 @@
                               <children>
                                   <Label GridPane.columnIndex="0" GridPane.rowIndex="8" prefHeight="30.0" prefWidth="60.0" style="-fx-text-fill: -text-color;" />
                                   <TextField fx:id="idField" GridPane.columnIndex="1" GridPane.rowIndex="9"  visible="false" layoutX="739.0" layoutY="18.0" prefHeight="30.0" prefWidth="151.0" styleClass="rectangle" />
-                                  <Label GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="30.0" prefWidth="60.0" style="-fx-text-fill: -text-color;" text="学号" />
+                                  <Label fx:id="nameLabel" GridPane.columnIndex="0" GridPane.rowIndex="0" prefHeight="30.0" prefWidth="60.0" style="-fx-text-fill: -text-color;" text="学号"/>
                                   <TextField fx:id="nameField"  GridPane.columnIndex="1" GridPane.rowIndex="0" layoutX="739.0" layoutY="18.0" prefHeight="30.0" prefWidth="151.0" promptText="学号" styleClass="rectangle" />
                                   <Label GridPane.columnIndex="0" GridPane.rowIndex="1" prefHeight="30.0" prefWidth="60.0" style="-fx-text-fill: -text-color;"  text="姓名:" />
                                   <TextField fx:id="nickNameField"  GridPane.columnIndex="1" GridPane.rowIndex="1" layoutX="739.0" layoutY="18.0" prefHeight="30.0" prefWidth="151.0" promptText="姓名" styleClass="rectangle" />

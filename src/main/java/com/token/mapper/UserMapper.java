@@ -1,13 +1,10 @@
 package com.token.mapper;
 
 import com.token.annotation.AutoFill;
-import com.token.annotation.AutoFormat;
-import com.token.entity.Role;
 import com.token.entity.User;
-import com.token.entity.dto.UserRoleListDTO;
+import com.token.entity.dto.UserRoleDTO;
 import com.token.eunms.OperationType;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -44,7 +41,7 @@ public interface UserMapper {
      * @param userRoleListDTO
      * @return
      */
-    List<User> getUserRoleListByUser(UserRoleListDTO userRoleListDTO);
+    List<User> getUserRoleListByUser(UserRoleDTO userRoleListDTO);
 
     /**
      * 修改用户
@@ -52,4 +49,11 @@ public interface UserMapper {
      */
     @AutoFill(OperationType.UPDATE)
     void update(User user);
+
+    /**
+     * 用户角色查询标识
+     * @param roleDTO
+     * @return
+     */
+    User getUserByUserRole(UserRoleDTO roleDTO);
 }

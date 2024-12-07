@@ -216,7 +216,7 @@
                      <children>
                         <ScrollPane fx:id="body" fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0" StackPane.alignment="TOP_LEFT">
                            <content>
-                              <fx:include source="../student/student.fxml" />
+                              <fx:include source="../user/user.fxml" />
                            </content></ScrollPane>
                      </children>
                   </StackPane>

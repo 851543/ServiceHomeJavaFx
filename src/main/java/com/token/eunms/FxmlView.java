@@ -51,26 +51,37 @@ public enum FxmlView {
             return "/template/repair/repair.fxml";
         }
     },
-    SERVICE{
+//    SERVICE{
+//        @Override
+//        public String title() {
+//            return getStringFromResourceBundle("service.title");
+//        }
+//
+//        @Override
+//        public String fxml() {
+//            return "/template/service/service.fxml";
+//        }
+//    },
+//    STUDENT{
+//        @Override
+//        public String title() {
+//            return getStringFromResourceBundle("student.title");
+//        }
+//
+//        @Override
+//        public String fxml() {
+//            return "/template/student/student.fxml";
+//        }
+//    },
+    USER{
         @Override
         public String title() {
-            return getStringFromResourceBundle("service.title");
+            return getStringFromResourceBundle("user.title");
         }
 
         @Override
         public String fxml() {
-            return "/template/service/service.fxml";
-        }
-    },
-    STUDENT{
-        @Override
-        public String title() {
-            return getStringFromResourceBundle("student.title");
-        }
-
-        @Override
-        public String fxml() {
-            return "/template/student/student.fxml";
+            return "/template/user/user.fxml";
         }
     };
 

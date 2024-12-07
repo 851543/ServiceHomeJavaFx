@@ -134,6 +134,26 @@
         <include refid="whereUserRoleSearch"/>
         order by a.create_time desc
     </select>
+    <select id="getUserByUserRole" resultType="com.token.entity.User">
+        select a.id,
+        user_name,
+        nick_name,
+        email,
+        phone_number,
+        sex,
+        avatar,
+        password,
+        a.status,
+        a.del_flag,
+        a.create_by,
+        a.create_time,
+        a.update_by,
+        a.update_time
+        from user a
+        left join user_role b on a.id = b.user_id
+        left join role c on c.id = b.role_id
+        <include refid="whereUserRoleSearch"/>
+    </select>
     <update id="update">
         update user set
         <if test="userName !=null and userName !=''">

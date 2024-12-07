@@ -1,11 +1,13 @@
 package com.token.controller;
 
 import com.token.entity.User;
+import com.token.entity.dto.UserRoleDTO;
 import com.token.eunms.UserRole;
 import com.token.fx.utils.Alerts;
 import com.token.service.UserService;
 import com.token.utils.ServiceHomeUtils;
 import com.token.utils.SpringUtils;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,14 +17,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -32,13 +30,15 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Controller
-public class StudentEditController implements Initializable {
-
+public class UserEditController implements Initializable {
     @FXML
     private TextField idField;
 
     @FXML
     private TextField nameField;
+
+    @FXML
+    private Label nameLabel;
 
     @FXML
     private TextField nickNameField;
@@ -60,34 +60,47 @@ public class StudentEditController implements Initializable {
 
     private Stage stage;
 
-    private TableView<User> studentTableView;
+    private TableView<User> userTableView;
 
-    private ObservableList<User> userObservableList;
+    ObservableList<User> studentObservableList;
+
+    ObservableList<User> serviceObservableList;
 
     private User user;
 
-    private Logger log = LoggerFactory.getLogger(StudentController.class);
+    private UserRole userRole;
 
+    private Logger log = LoggerFactory.getLogger(UserEditController.class);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        userRoleShow();
+        if (ObjectUtils.isEmpty(this.user)) {
+            nameLabel.setVisible(false);
+            nameField.setVisible(false);
+        }
     }
 
     @FXML
     private void addOrEditUser() {
         try {
             if (ObjectUtils.isEmpty(this.user)) {
-                boolean validate = userValidate();
+                boolean validate = userValidate(true);
                 if (validate) {
                     userInfoError.setVisible(true);
                     return;
                 }
                 User user = new User();
                 userInfo(user);
-                SpringUtils.getBean(UserService.class).insert(UserRole.STUDENT, user);
-                userObservableList.add(user);
+                SpringUtils.getBean(UserService.class).insert(userRole, user);
+                if (userRole == UserRole.STUDENT) {
+                    studentObservableList.add(user);
+                }
+                if (userRole == UserRole.SERVICE) {
+                    serviceObservableList.add(user);
+                }
             } else {
-                boolean validate = userValidate();
+                boolean validate = userValidate(false);
                 if (validate) {
                     userInfoError.setVisible(true);
                     return;
@@ -95,7 +108,7 @@ public class StudentEditController implements Initializable {
                 userInfo(this.user);
                 SpringUtils.getBean(UserService.class).update(user);
                 //刷新
-                studentTableView.refresh();
+                userTableView.refresh();
             }
             stage.close();
             Alerts.success("成功", "操作成功");
@@ -103,6 +116,18 @@ public class StudentEditController implements Initializable {
             e.printStackTrace();
             stage.close();
             Alerts.error("失败", "操作失败");
+        }
+    }
+
+    /**
+     * 展示
+     */
+    private void userRoleShow() {
+        if (this.userRole == UserRole.STUDENT) {
+            nameField.setText("学号");
+        }
+        if (this.userRole == UserRole.SERVICE) {
+            nameField.setText("工号");
         }
     }
 
@@ -116,13 +141,18 @@ public class StudentEditController implements Initializable {
         user.setStatus(ServiceHomeUtils.setStatusType(statusField.getValue()));
     }
 
-    private boolean userValidate() {
-        if (StringUtils.isEmpty(nameField.getText())) {
-            userInfoError.setText("你的学号为空");
-            return true;
-        } else if (!ObjectUtils.isEmpty(SpringUtils.getBean(UserService.class).selectName(nameField.getText()))) {
-            userInfoError.setText("你的学号已经存在");
-            return true;
+    private boolean userValidate(boolean nameValid) {
+        if (nameValid){
+            UserRoleDTO userRoleDTO = new UserRoleDTO();
+            userRoleDTO.setUserName(nameField.getText());
+            userRoleDTO.setRole(userRole.getRole());
+            if (StringUtils.isEmpty(nameField.getText())) {
+                userInfoError.setText("你的" + nameField.getText() + "为空");
+                return true;
+            } else if (!ObjectUtils.isEmpty(SpringUtils.getBean(UserService.class).selectName(userRoleDTO))) {
+                userInfoError.setText("你的" + nameField.getText() + "已经存在");
+                return true;
+            }
         }
         if (StringUtils.isEmpty(nickNameField.getText())) {
             userInfoError.setText("你的姓名为空");
@@ -155,6 +185,14 @@ public class StudentEditController implements Initializable {
         this.stage.close();
     }
 
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
     public Stage getStage() {
         return stage;
     }
@@ -163,20 +201,28 @@ public class StudentEditController implements Initializable {
         this.stage = stage;
     }
 
-    public TableView<User> getStudentTableView() {
-        return studentTableView;
+    public TableView<User> getUserTableView() {
+        return userTableView;
     }
 
-    public void setStudentTableView(TableView<User> studentTableView) {
-        this.studentTableView = studentTableView;
+    public void setUserTableView(TableView<User> userTableView) {
+        this.userTableView = userTableView;
     }
 
-    public ObservableList<User> getUserObservableList() {
-        return userObservableList;
+    public ObservableList<User> getStudentObservableList() {
+        return studentObservableList;
     }
 
-    public void setUserObservableList(ObservableList<User> userObservableList) {
-        this.userObservableList = userObservableList;
+    public void setStudentObservableList(ObservableList<User> studentObservableList) {
+        this.studentObservableList = studentObservableList;
+    }
+
+    public ObservableList<User> getServiceObservableList() {
+        return serviceObservableList;
+    }
+
+    public void setServiceObservableList(ObservableList<User> serviceObservableList) {
+        this.serviceObservableList = serviceObservableList;
     }
 
     public User getUser() {
@@ -193,11 +239,10 @@ public class StudentEditController implements Initializable {
             phoneField.setText(user.getPhoneNumber());
             try {
                 avatarField.setImage(new Image(new File(user.getAvatar()).toURI().toString()));
-            }catch (Exception e){
+            } catch (Exception e) {
                 log.error(e.getMessage());
             }
             statusField.setValue(ServiceHomeUtils.setStatusType(user.getStatus()));
         }
     }
-
 }

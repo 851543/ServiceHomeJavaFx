@@ -2,7 +2,7 @@ package com.token.service.impl;
 
 import com.token.constant.DefaultPassword;
 import com.token.entity.User;
-import com.token.entity.dto.UserRoleListDTO;
+import com.token.entity.dto.UserRoleDTO;
 import com.token.eunms.UserRole;
 import com.token.mapper.RoleMapper;
 import com.token.mapper.UserMapper;
@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -58,14 +56,13 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 查询学号
+     * 用户角色查询标识
+     * @param roleDTO
      * @return
      */
     @Override
-    public User selectName(String name) {
-        User user = new User();
-        user.setUserName(name);
-        return userMapper.getUserByUser(user);
+    public User selectName(UserRoleDTO roleDTO) {
+        return userMapper.getUserByUserRole(roleDTO);
     }
 
     /**
@@ -74,7 +71,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public List<User> userRoleList(UserRoleListDTO userRoleListDTO) {
+    public List<User> userRoleList(UserRoleDTO userRoleListDTO) {
         return  userMapper.getUserRoleListByUser(userRoleListDTO);
     }
 

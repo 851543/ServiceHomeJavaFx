@@ -7,8 +7,10 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.token.eunms.FxmlView;
+import com.token.eunms.UserRole;
 import com.token.fx.SpringFXMLLoader;
 import com.token.fx.StageManager;
+import com.token.utils.ServiceHomeUtils;
 import com.token.utils.SpringUtils;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -102,11 +104,13 @@ public class MainController implements Initializable {
 
     @FXML
     private void serviceClicked(){
-        SpringUtils.getBean(StageManager.class).switchContent(FxmlView.SERVICE,body);
+        ServiceHomeUtils.setChangeRole(UserRole.SERVICE);
+        SpringUtils.getBean(StageManager.class).switchContent(FxmlView.USER,body);
     }
 
     @FXML
     private void studentClicked(){
-        SpringUtils.getBean(StageManager.class).switchContent(FxmlView.STUDENT,body);
+        ServiceHomeUtils.setChangeRole(UserRole.STUDENT);
+        SpringUtils.getBean(StageManager.class).switchContent(FxmlView.USER,body);
     }
 }

@@ -2,7 +2,7 @@ package com.token.entity.dto;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 
-public class UserRoleListDTO {
+public class UserRoleDTO {
 
     /**
      * 用户账号

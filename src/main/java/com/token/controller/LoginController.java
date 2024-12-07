@@ -7,6 +7,7 @@ import com.gn.GNAvatarView;
 import com.token.constant.AccountNameConstant;
 import com.token.constant.MessageConstant;
 import com.token.entity.User;
+import com.token.entity.dto.UserRoleDTO;
 import com.token.eunms.FxmlView;
 import com.token.eunms.UserRole;
 import com.token.fx.StageManager;
@@ -36,6 +37,7 @@ import java.util.ResourceBundle;
 
 /**
  * 登录控制器类
+ *
  * @author 阿俊
  * @description
  */
@@ -44,11 +46,16 @@ public class LoginController implements Initializable {
     @FXML
     private GNAvatarView avatar; // 头像视图
 
-    @FXML private HBox box_username; // 用户名输入框容器
-    @FXML private HBox box_password; // 密码输入框容器
-    @FXML private TextField username; // 用户名输入框
-    @FXML private TextField password; // 密码输入框
-    @FXML private Button login; // 登录按钮
+    @FXML
+    private HBox box_username; // 用户名输入框容器
+    @FXML
+    private HBox box_password; // 密码输入框容器
+    @FXML
+    private TextField username; // 用户名输入框
+    @FXML
+    private TextField password; // 密码输入框
+    @FXML
+    private Button login; // 登录按钮
 
     @FXML
     private Label lbl_password; // 密码错误提示标签
@@ -71,7 +78,8 @@ public class LoginController implements Initializable {
 
     /**
      * 初始化方法
-     * @param location URL对象
+     *
+     * @param location  URL对象
      * @param resources 资源包
      */
     @Override
@@ -94,17 +102,17 @@ public class LoginController implements Initializable {
      *
      */
     @FXML
-    private void studentClick(){
+    private void studentClick() {
         LoginSwitch(UserRole.STUDENT);
     }
 
     @FXML
-    private void adminClick(){
+    private void adminClick() {
         LoginSwitch(UserRole.ADMIN);
     }
 
     @FXML
-    private void serviceClick(){
+    private void serviceClick() {
         LoginSwitch(UserRole.SERVICE);
     }
 
@@ -113,38 +121,38 @@ public class LoginController implements Initializable {
      * 处理登录按钮点击事件
      */
     @FXML
-    private void loginAction(ActionEvent event){
+    private void loginAction(ActionEvent event) {
         event.consume();
         Pulse pulse = new Pulse(login);
         pulse.setDelay(Duration.millis(20));
         pulse.play();
-        if(validPassword() && validUsername())
+        if (validPassword() && validUsername())
             enter();
-        else if (ObjectUtils.isEmpty(username) || StringUtils.isEmpty(username.getText())){
+        else if (ObjectUtils.isEmpty(username) || StringUtils.isEmpty(username.getText())) {
             lbl_username.setVisible(true);
-        }else {
+        } else {
             lbl_password.setVisible(true);
         }
     }
 
-    private void LoginSwitch(UserRole login){
+    private void LoginSwitch(UserRole login) {
         username.getParent().setStyle("-icon-color : -dark-gray; -fx-border-color : transparent");
         password.getParent().setStyle("-icon-color : -dark-gray; -fx-border-color : transparent");
         lbl_username.setVisible(false);
         lbl_password.setVisible(false);
-        if (login == UserRole.STUDENT){
+        if (login == UserRole.STUDENT) {
             lbl_error.setText(AccountNameConstant.STUDENT_ID + "或者密码不对");
             username.setPromptText(AccountNameConstant.STUDENT_ID);
             lbl_username.setText(AccountNameConstant.STUDENT_ID + MessageConstant.VITIATION);
             loginRole = UserRole.STUDENT;
         }
-        if (login == UserRole.ADMIN){
+        if (login == UserRole.ADMIN) {
             lbl_error.setText(AccountNameConstant.ADMIN + "或者密码不对");
             username.setPromptText(AccountNameConstant.ADMIN);
             lbl_username.setText(AccountNameConstant.ADMIN + MessageConstant.VITIATION);
             loginRole = UserRole.ADMIN;
         }
-        if (login == UserRole.SERVICE){
+        if (login == UserRole.SERVICE) {
             lbl_error.setText(AccountNameConstant.WORK_ID + "或者密码不对");
             username.setPromptText(AccountNameConstant.WORK_ID);
             lbl_username.setText(AccountNameConstant.WORK_ID + MessageConstant.VITIATION);
@@ -159,7 +167,7 @@ public class LoginController implements Initializable {
         lbl_username.setVisible(false);
         lbl_password.setVisible(false);
         boolean validate = loginValidate();
-        if (validate){
+        if (validate) {
             // 输入有效时隐藏错误提示
             lbl_error.setVisible(true);
             return;
@@ -172,12 +180,16 @@ public class LoginController implements Initializable {
      * 登陆校验
      */
     private boolean loginValidate() {
-        User user = userService.selectName(username.getText());
-        if (ObjectUtils.isEmpty(user) || StringUtils.isEmpty(user.getUserName())){
+        UserRoleDTO userRoleDTO = new UserRoleDTO();
+        userRoleDTO.setUserName(username.getText());
+        userRoleDTO.setRole(loginRole.getRole());
+        User user = userService.selectName(userRoleDTO);
+        if (ObjectUtils.isEmpty(user) || StringUtils.isEmpty(user.getUserName())) {
             return true;
         }
         String pws = password.getText();
-        if (!roleService.selectRolesUserName(user.getUserName()).stream().anyMatch(role -> role.equals(getRole(loginRole)))) return true;
+        if (!roleService.selectRolesUserName(user.getUserName()).stream().anyMatch(role -> role.equals(getRole(loginRole))))
+            return true;
         if (!user.getPassword().equals(DigestUtils.md5DigestAsHex(pws.getBytes()))) return true;
         this.loginUser = user;
         return false;
@@ -185,17 +197,18 @@ public class LoginController implements Initializable {
 
     /**
      * 获取角色
+     *
      * @param loginRole
      * @return
      */
-    private String getRole(UserRole loginRole){
-        switch (loginRole){
+    private String getRole(UserRole loginRole) {
+        switch (loginRole) {
             case ADMIN:
-                return  "admin";
+                return "admin";
             case STUDENT:
-                return  "student";
+                return "student";
             case SERVICE:
-                return  "service";
+                return "service";
             default:
                 break;
         }
@@ -205,11 +218,11 @@ public class LoginController implements Initializable {
     /**
      * 设置各种监听器
      */
-    private void setupListeners(){
+    private void setupListeners() {
         // 为密码输入框添加监听器
         password.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if(!validPassword()){
-                if(!newValue){
+            if (!validPassword()) {
+                if (!newValue) {
                     // 显示错误提示并播放动画
                     Flash swing = new Flash(box_password);
                     lbl_password.setVisible(true);
@@ -229,8 +242,8 @@ public class LoginController implements Initializable {
 
         // 为用户名输入框添加监听器
         username.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if(!validUsername()){
-                if(!newValue){
+            if (!validUsername()) {
+                if (!newValue) {
                     // 显示错误提示并播放动画
                     Flash swing = new Flash(box_username);
                     lbl_username.setVisible(true);
@@ -251,9 +264,10 @@ public class LoginController implements Initializable {
 
     /**
      * 为节点添加交互效果
+     *
      * @param node 要添加效果的节点
      */
-    private void addEffect(Node node){
+    private void addEffect(Node node) {
         // 添加鼠标按下事件监听器
         node.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> {
             rotateTransition.play();
@@ -267,7 +281,7 @@ public class LoginController implements Initializable {
 
         // 添加焦点状态监听器
         node.focusedProperty().addListener((observable, oldValue, newValue) -> {
-            if(!node.isFocused())
+            if (!node.isFocused())
                 // 当失去焦点时恢复默认样式
                 node.getParent().setStyle("-icon-color : -dark-gray; -fx-border-color : transparent");
             else
@@ -279,17 +293,19 @@ public class LoginController implements Initializable {
 
     /**
      * 验证密码是否合法
+     *
      * @return 是否合法
      */
-    private boolean validPassword(){
+    private boolean validPassword() {
         return !password.getText().isEmpty();
     }
 
     /**
      * 验证用户名是否合法
+     *
      * @return 是否合法
      */
-    private boolean validUsername(){
+    private boolean validUsername() {
         return !username.getText().isEmpty();
     }
 }

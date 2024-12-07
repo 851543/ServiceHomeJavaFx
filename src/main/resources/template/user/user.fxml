@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import java.net.*?>
 <StackPane prefHeight="1120.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.token.controller.StudentController">
+           fx:controller="com.token.controller.UserController">
     <children>
         <VBox alignment="CENTER" spacing="10.0">
             <children>
@@ -13,7 +13,7 @@
                     <children>
                         <HBox alignment="CENTER" prefWidth="478.0" spacing="20.0">
                             <children>
-                                <Label prefHeight="30.0" prefWidth="40.0" style="-fx-text-fill: -text-color;"
+                                <Label fx:id="userNameLabel" prefHeight="30.0" prefWidth="40.0" style="-fx-text-fill: -text-color;"
                                        text="学号:"/>
                                 <TextField fx:id="userNameField" layoutX="739.0" layoutY="18.0" prefHeight="30.0"
                                            prefWidth="151.0" promptText="学号" styleClass="rectangle"/>
@@ -27,18 +27,18 @@
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="478.0" spacing="10.0">
                             <children>
                                 <Button layoutX="516.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"
-                                        prefWidth="100.0" styleClass="btn-success" onMouseClicked="#selectStudent" text="查询"/>
+                                        prefWidth="100.0" styleClass="btn-success" onMouseClicked="#selectUser" text="查询"/>
                                 <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"
-                                        styleClass="btn-primary" onMouseClicked="#insertStudent" text="添加"/>
+                                        styleClass="btn-primary" onMouseClicked="#insertUser" text="添加"/>
                                 <Button layoutX="406.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"
-                                        prefWidth="100.0" styleClass="btn-info" onMouseClicked="#updateStudent" text="修改"/>
+                                        prefWidth="100.0" styleClass="btn-info" onMouseClicked="#updateUser" text="修改"/>
                                 <Button layoutX="571.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"
-                                        prefWidth="100.0" styleClass="btn-warning" onMouseClicked="#deleteStudent" text="删除"/>
+                                        prefWidth="100.0" styleClass="btn-warning" onMouseClicked="#deleteUser" text="删除"/>
                             </children>
                         </HBox>
                         <VBox>
                             <children>
-                                <TableView fx:id="studentTableView" prefHeight="600">
+                                <TableView fx:id="userTableView" prefHeight="600">
                                     <columns>
                                         <TableColumn fx:id="id" text="主键" visible="false"/>
 
