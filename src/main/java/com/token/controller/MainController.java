@@ -1,38 +1,34 @@
 package com.token.controller;
 
 
+import com.gn.App;
 import com.gn.GNAvatarView;
-import com.jfoenix.controls.JFXBadge;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
+import com.token.entity.User;
 import com.token.eunms.FxmlView;
 import com.token.eunms.UserRole;
 import com.token.fx.SpringFXMLLoader;
 import com.token.fx.StageManager;
 import com.token.utils.ServiceHomeUtils;
 import com.token.utils.SpringUtils;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.SVGPath;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.controlsfx.control.PopOver;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -49,10 +45,22 @@ public class MainController implements Initializable {
     private ScrollPane body;
 
     @FXML
-    private Label title;
+    private JFXButton config;
 
     @FXML
-    private JFXButton config;
+    private GNAvatarView avatar;
+
+    @FXML
+    private Label nameLabel;
+
+    @FXML
+    private Button repair;
+
+    @FXML
+    private Button service;
+
+    @FXML
+    private Button student;
 
     private Parent popContent;
 
@@ -61,6 +69,40 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadContentPopup();
+        showWeb();
+        if (!ObjectUtils.isEmpty(ServiceHomeUtils.getLoginUserInfo())){
+           User loginUserInfo = ServiceHomeUtils.getLoginUserInfo();
+           nameLabel.setText(loginUserInfo.getNickName());
+           String imagePath =  StringUtils.isEmpty(loginUserInfo.getAvatar()) ? ServiceHomeUtils.defaultImagePath : loginUserInfo.getAvatar();
+           Image image = new Image(new File(imagePath).toURI().toString());
+           Platform.runLater(()->{
+               avatar.setImage(image);
+           });
+       }
+    }
+
+    @FXML
+    private void userInfo(MouseEvent e) throws IOException {
+        if(e.getClickCount() == 2){
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(App.class.getResource("/template/user/user_info.fxml"));
+            StackPane target = loader.load();
+            Scene scene = new Scene(target);
+
+            Stage stage = new Stage();//创建舞台；
+            UserInfoController controller = loader.getController();
+            controller.setStage(stage);
+            controller.setUser(ServiceHomeUtils.getLoginUserInfo());
+            controller.setNameInfoLabel(nameLabel);
+            controller.setAvatar(avatar);
+            stage.setHeight(800);
+            stage.setWidth(700);
+            //设置窗口图标
+            stage.getIcons().add(new Image("/styles/img/icon.png"));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene); //将场景载入舞台
+            stage.show(); //显示窗口
+        }
     }
 
     @FXML
@@ -70,6 +112,16 @@ public class MainController implements Initializable {
         } else {
             popConfig.show(config, 0);
             popConfig.getRoot().setFocusTraversable(true);
+        }
+    }
+
+    private void showWeb(){
+        if (ObjectUtils.isEmpty(ServiceHomeUtils.getLoginUserRole())){
+            return;
+        }
+        if (ServiceHomeUtils.getLoginUserRole() != UserRole.ADMIN){
+            service.setVisible(false);
+            student.setVisible(false);
         }
     }
 

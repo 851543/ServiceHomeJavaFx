@@ -75,10 +75,6 @@ public class UserEditController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userRoleShow();
-        if (ObjectUtils.isEmpty(this.user)) {
-            nameLabel.setVisible(false);
-            nameField.setVisible(false);
-        }
     }
 
     @FXML
@@ -172,7 +168,7 @@ public class UserEditController implements Initializable {
     private void imagePicker() {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter imageFilter =
-                new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.jpeg", "*.png", "*.gif");
+                new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.jpeg", "*.png");
         fileChooser.getExtensionFilters().add(imageFilter);
         File file = fileChooser.showOpenDialog(avatarField.getScene().getWindow());
         if (!ObjectUtils.isEmpty(file)) {
@@ -243,6 +239,13 @@ public class UserEditController implements Initializable {
                 log.error(e.getMessage());
             }
             statusField.setValue(ServiceHomeUtils.setStatusType(user.getStatus()));
+        }
+        if (!ObjectUtils.isEmpty(this.user)) {
+            nameLabel.setVisible(false);
+            nameField.setVisible(false);
+        }else {
+            nameLabel.setVisible(true);
+            nameField.setVisible(true);
         }
     }
 }

@@ -13,6 +13,7 @@ import com.token.eunms.UserRole;
 import com.token.fx.StageManager;
 import com.token.service.RoleService;
 import com.token.service.UserService;
+import com.token.utils.ServiceHomeUtils;
 import com.token.utils.SpringUtils;
 import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
@@ -173,6 +174,7 @@ public class LoginController implements Initializable {
             return;
         }
         userService.login(loginUser);
+        ServiceHomeUtils.setLoginUserRole(loginRole);
         SpringUtils.getBean(StageManager.class).switchScene(FxmlView.MAIN);
     }
 

@@ -1,8 +1,9 @@
-package com.token.entity;
+package com.token.entity.vo;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -11,74 +12,61 @@ import java.time.LocalDateTime;
  * @author 闃夸繆
  * @description  
  */
-@TableName(value ="repair")
-public class Repair  implements Serializable {
+public class RepairVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(value="id")
-    @TableField(value="id")
     private Long id;
 
     /**
-     * 用户id 
+     * 用户账号
      */
-    @TableField(value="user_id")
-    private Integer userId;
+    private String userName;
+
+    /**
+     * 用户昵称
+     */
+    private String nickName;
+
+    /**
+     * 手机号码
+     */
+    private String phoneNumber;
+
+    /**
+     * 用户性别（0男 1女 2未知）
+     */
+    private String sex;
 
     /**
      * 楼号 
      */
-    @TableField(value="floor")
     private String floor;
 
     /**
      * 房号 
      */
-    @TableField(value="room")
     private String room;
 
     /**
      * 内容 
      */
-    @TableField(value="content")
     private String content;
 
     /**
      * 报修状态（0未提交 1待受理 2已派工 3维修结束） 
      */
-    @TableField(value="status")
     private String status;
 
     /**
      * 删除标志（0代表存在 1代表删除） 
      */
-    @TableField(value="del_flag")
     private String delFlag;
-
-    /**
-     * 创建者 
-     */
-    @TableField(value="create_by")
-    private String createBy;
 
     /**
      * 创建时间 
      */
-    @TableField(value="create_time")
     private LocalDateTime createTime;
-
-    /**
-     * 更新者 
-     */
-    @TableField(value="update_by")
-    private String updateBy;
-
-    /**
-     * 更新时间 
-     */
-    @TableField(value="update_time")
-    private LocalDateTime updateTime;
 
     public Long getId() {
         return id;
@@ -88,12 +76,36 @@ public class Repair  implements Serializable {
         this.id = id;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public String getFloor() {
@@ -136,35 +148,11 @@ public class Repair  implements Serializable {
         this.delFlag = delFlag;
     }
 
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
-
     public LocalDateTime getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
-    }
-
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
     }
 }

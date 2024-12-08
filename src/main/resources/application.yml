@@ -22,7 +22,7 @@ logging:
       token:
         mapper: debug
         service: info
-        controller: info
+        controller: info,errer
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml

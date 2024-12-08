@@ -10,7 +10,7 @@ public class SpringJavaFxApplication extends AbstractJavaFxApplication {
 
     public static void main(String[] args) {
         run(SpringJavaFxApplication.class,
-                Arrays.asList(new FxmlView[]{FxmlView.MAIN, FxmlView.LOGIN}),
+                Arrays.asList(new FxmlView[]{FxmlView.MAIN, FxmlView.LOGIN,FxmlView.REPAIR,FxmlView.USER}),
                 FxmlView.LOGIN, args);
     }
 }

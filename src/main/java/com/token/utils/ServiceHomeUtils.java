@@ -26,7 +26,11 @@ public class ServiceHomeUtils {
 
     private static User user;
 
+    private static UserRole loginUserRole;
+
     private static UserRole changeRole;
+
+    public static String defaultImagePath = "E:\\idea\\project\\Java\\ServiceHomeJavaFx\\src\\main\\resources\\styles\\img\\pe.png";
 
     public static String avatarImage(ImageView image) {
         log.info("文件本地存储:{}", image);
@@ -90,5 +94,13 @@ public class ServiceHomeUtils {
 
     public static void setChangeRole(UserRole changeRole) {
         ServiceHomeUtils.changeRole = changeRole;
+    }
+
+    public static UserRole getLoginUserRole() {
+        return loginUserRole;
+    }
+
+    public static void setLoginUserRole(UserRole loginUserRole) {
+        ServiceHomeUtils.loginUserRole = loginUserRole;
     }
 }
