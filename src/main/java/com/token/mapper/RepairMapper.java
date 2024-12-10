@@ -2,9 +2,12 @@ package com.token.mapper;
 
 import com.token.annotation.AutoFill;
 import com.token.entity.Repair;
+import com.token.entity.vo.RepairVO;
 import com.token.eunms.OperationType;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface RepairMapper {
@@ -13,4 +16,6 @@ public interface RepairMapper {
             "(#{userId},#{floor},#{room},#{avatar},#{content},#{delFlag},#{status},#{createTime},#{createBy},#{updateTime},#{updateBy})")
     @AutoFill(OperationType.INSERT)
     void insert(Repair repair);
+
+    List<Repair> repairList(Repair repair);
 }

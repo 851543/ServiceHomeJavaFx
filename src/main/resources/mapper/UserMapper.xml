@@ -39,7 +39,7 @@
     <sql id="whereUserSearch">
         <where>
             <if test="id !=null">
-                and user_name = #{userName}
+                and id = #{id}
             </if>
             <if test="userName !=null and userName !=''">
                 and user_name = #{userName}
@@ -152,7 +152,19 @@
         from user a
         left join user_role b on a.id = b.user_id
         left join role c on c.id = b.role_id
-        <include refid="whereUserRoleSearch"/>
+        <where>
+            <if test="userName !=null and userName !=''">
+                and a.user_name = #{userName}
+            </if>
+            <if test="nickName !=null and nickName !=''">
+                and a.nick_name = #{nickName}
+            </if>
+            <if test="role !=null and role !=''">
+                and c.role_name = #{role}
+            </if>
+            and a.del_flag = 0
+            and c.del_flag = 0
+        </where>
     </select>
     <update id="update">
         update user set

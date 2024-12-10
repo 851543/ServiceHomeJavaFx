@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RepairServiceImpl implements RepairService {
@@ -49,6 +50,16 @@ public class RepairServiceImpl implements RepairService {
      */
     @Override
     public List<RepairVO> repairList(Repair repair) {
-        return null;
+        List<Repair> repairList = repairMapper.repairList(repair);
+        List<RepairVO> repairVOList = repairList.stream().map(item -> {
+            User user = new User();
+            user.setId(Long.valueOf(item.getUserId()));
+            RepairVO repairVO = new RepairVO();
+            user = userMapper.getUserByUser(user);
+            BeanUtils.copyProperties(user,repairVO);
+            BeanUtils.copyProperties(item,repairVO);
+            return repairVO;
+        }).collect(Collectors.toList());
+        return repairVOList;
     }
 }

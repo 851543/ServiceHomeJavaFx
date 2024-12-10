@@ -107,6 +107,7 @@ public class RepairController implements Initializable {
         showWeb();
         setupColumns();
         updateItem();
+        if (!ObjectUtils.isEmpty(ServiceHomeUtils.getLoginUserRole())) selectRepair();
     }
 
     @FXML
