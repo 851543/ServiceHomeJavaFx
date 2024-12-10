@@ -16,9 +16,9 @@
                             <children>
                                 <Label fx:id="repairIdLabel"  prefHeight="30.0" prefWidth="40.0" style="-fx-text-fill: -text-color;" text="编号:" />
                                 <TextField fx:id="repairIdField" layoutX="739.0" layoutY="18.0" prefHeight="30.0" prefWidth="151.0" promptText="编号" styleClass="rectangle" />
-                                <Label prefHeight="30.0" prefWidth="40.0" style="-fx-text-fill: -text-color;" text="学号:" />
+                                <Label fx:id="repairNameLabel" prefHeight="30.0" prefWidth="40.0" style="-fx-text-fill: -text-color;" text="学号:" />
                                 <TextField fx:id="repairNameField" layoutX="739.0" layoutY="18.0" prefHeight="30.0" prefWidth="151.0" promptText="学号" styleClass="rectangle" />
-                                <Label fx:id="repairNameLabel" prefHeight="30.0" prefWidth="40.0" style="-fx-text-fill: -text-color;" text="状态:" />
+                                <Label  prefHeight="30.0" prefWidth="40.0" style="-fx-text-fill: -text-color;" text="状态:" />
                                 <ComboBox fx:id="statusBox" prefHeight="30.0" prefWidth="179.0" visible="true" >
                                     <items>
                                         <FXCollections fx:factory="observableArrayList" >
@@ -38,11 +38,11 @@
 
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="478.0" spacing="10.0">
                             <children>
-                                <Button layoutX="516.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"  styleClass="btn-success" text="查询" />
-                                <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"  styleClass="btn-primary" text="添加" />
-                                <Button layoutX="406.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"  styleClass="btn-info" text="修改" />
-                                <Button layoutX="571.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"  prefWidth="100.0" styleClass="btn-warning" text="删除" />
-                                <Button layoutX="571.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"  prefWidth="100.0" styleClass="btn-secondary" text="派工" />
+                                <Button  layoutX="516.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"  styleClass="btn-success" onMouseClicked="#selectRepair" text="查询" />
+                                <Button  mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"  styleClass="btn-primary" onMouseClicked="#insertRepair" text="添加" />
+                                <Button  layoutX="406.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"  styleClass="btn-info" onMouseClicked="#updateRepair" text="修改" />
+                                <Button  layoutX="571.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"  prefWidth="100.0" styleClass="btn-warning" onMouseClicked="#deleteRepair" text="删除" />
+                                <Button fx:id="dispatchBtn" layoutX="571.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"  prefWidth="100.0" styleClass="btn-secondary" onMouseClicked="#dispatchBtn" text="派工" />
                             </children>
                         </HBox>
                         <VBox>

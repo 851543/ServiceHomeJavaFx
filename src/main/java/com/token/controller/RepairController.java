@@ -2,11 +2,13 @@ package com.token.controller;
 
 import com.gn.App;
 import com.sun.javafx.collections.ObservableListWrapper;
+import com.token.entity.Repair;
 import com.token.entity.User;
 import com.token.entity.dto.UserRoleDTO;
 import com.token.entity.vo.RepairVO;
 import com.token.eunms.UserRole;
 import com.token.fx.utils.Alerts;
+import com.token.service.RepairService;
 import com.token.service.UserService;
 import com.token.utils.ServiceHomeUtils;
 import com.token.utils.SpringUtils;
@@ -54,7 +56,11 @@ public class RepairController implements Initializable {
     @FXML
     private Label repairNameLabel;
 
-    @FXML ComboBox statusBox;
+    @FXML
+    private ComboBox statusBox;
+
+    @FXML
+    private Button dispatchBtn;
 
     @FXML
     private TableColumn<User, Long> id;
@@ -103,6 +109,54 @@ public class RepairController implements Initializable {
         updateItem();
     }
 
+    @FXML
+    private void selectRepair(){
+        Repair repair = new Repair();
+        if (ServiceHomeUtils.getLoginUserRole() != UserRole.ADMIN){
+            repair.setUserId(Math.toIntExact(ServiceHomeUtils.getLoginUserInfo().getId()));
+        }
+        List<RepairVO> repairVOListList = SpringUtils.getBean(RepairService.class).repairList(repair);
+        repairVOTableView.setItems(new ObservableListWrapper<RepairVO>(new ArrayList<RepairVO>(repairVOListList)));
+    }
+
+    @FXML
+    private void insertRepair(){
+        try {
+            initStage(null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+    @FXML
+    private void updateRepair(){
+        try {
+            initStage(null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void deleteRepair(){
+        try {
+            initStage(null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void dispatchBtn(){
+        try {
+            initStage(null);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private void showWeb(){
         if (ObjectUtils.isEmpty(ServiceHomeUtils.getLoginUserRole())){
             return;
@@ -127,6 +181,10 @@ public class RepairController implements Initializable {
             if (parent instanceof Pane) {
                 ((Pane) parent).getChildren().remove(repairNameField);
             }
+            parent = dispatchBtn.getParent();
+            if (parent instanceof Pane) {
+                ((Pane) parent).getChildren().remove(dispatchBtn);
+            }
             id.setVisible(true);
             user_name.setVisible(false);
             nick_name.setVisible(false);
@@ -148,31 +206,32 @@ public class RepairController implements Initializable {
         createTime.setCellValueFactory(new PropertyValueFactory<>("createTime"));
     }
 
-
-    @FXML
-    private void selectUser() {
-    }
-
-    @FXML
-    private void deleteUser() {
-    }
-
-    @FXML
-    private void updateUser() {
-
-    }
-
-    @FXML
-    private void insertUser() {
-    }
-
     /**
      * 窗口
      *
-     * @param user
+     * @param repairVO
      * @throws IOException
      */
-    private void initStage(User user) throws IOException {
+    private void initStage(RepairVO repairVO) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(App.class.getResource("/template/repair/repair_edit.fxml"));
+        StackPane target = loader.load();
+        Scene scene = new Scene(target);
+
+
+        Stage stage = new Stage();//创建舞台；
+        RepairEditController controller = loader.getController();
+        controller.setStage(stage);
+        controller.setRepairVOObservableList(repairVOObservableList);
+        controller.setRepairVo(repairVO);
+        controller.setRepairVOTableView(repairVOTableView);
+        stage.setHeight(800);
+        stage.setWidth(700);
+        //设置窗口图标
+        stage.getIcons().add(new Image("/styles/img/icon.png"));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene); //将场景载入舞台
+        stage.show(); //显示窗口
     }
 
     /**

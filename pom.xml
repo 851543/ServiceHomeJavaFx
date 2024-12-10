@@ -91,6 +91,13 @@
             <version>v2.1.2-alpha</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.fxmisc.richtext</groupId>
+            <artifactId>richtextfx</artifactId>
+            <version>0.10.7</version>
+        </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/com.jfoenix/jfoenix -->
         <dependency>
             <groupId>com.jfoenix</groupId>

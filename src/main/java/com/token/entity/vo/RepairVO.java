@@ -49,6 +49,11 @@ public class RepairVO implements Serializable {
     private String room;
 
     /**
+     * 图片
+     */
+    private String avatar;
+
+    /**
      * 内容 
      */
     private String content;
@@ -122,6 +127,14 @@ public class RepairVO implements Serializable {
 
     public void setRoom(String room) {
         this.room = room;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getContent() {

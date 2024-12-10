@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import java.net.*?>
+<?import com.gn.GNAvatarView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+<?import com.token.fx.component.EditableTextFlow?>
+<?import org.fxmisc.richtext.CodeArea?>
+<StackPane prefHeight="620.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.token.controller.RepairEditController">
+    <children>
+        <VBox alignment="CENTER" spacing="10.0">
+            <children>
+                <VBox alignment="CENTER" spacing="20.0" styleClass="box-light" VBox.vgrow="ALWAYS">
+                    <children>
+                        <GridPane alignment="CENTER" prefWidth="478.0" hgap="10" vgap="10">
+                            <children>
+                                <Label GridPane.columnIndex="0" GridPane.rowIndex="8" prefHeight="30.0" prefWidth="60.0"
+                                       style="-fx-text-fill: -text-color;"/>
+                                <TextField fx:id="idField" GridPane.columnIndex="1" GridPane.rowIndex="9"
+                                           visible="false" layoutX="739.0" layoutY="18.0" prefHeight="30.0"
+                                           prefWidth="151.0" styleClass="rectangle"/>
+                                <Label fx:id="nameLabel" GridPane.columnIndex="0" GridPane.rowIndex="0"
+                                       prefHeight="30.0" prefWidth="60.0" style="-fx-text-fill: -text-color;"
+                                       text="学号"/>
+                                <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                                           layoutX="739.0" layoutY="18.0" prefHeight="30.0" prefWidth="151.0"
+                                           promptText="学号" styleClass="rectangle"/>
+                                <Label fx:id="nickNameLabel" GridPane.columnIndex="0" GridPane.rowIndex="1"
+                                       prefHeight="30.0" prefWidth="60.0" style="-fx-text-fill: -text-color;"
+                                       text="姓名:"/>
+                                <TextField fx:id="nickNameField" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                                           layoutX="739.0" layoutY="18.0" prefHeight="30.0" prefWidth="151.0"
+                                           promptText="姓名" styleClass="rectangle"/>
+                                <Label fx:id="sexLabel" GridPane.columnIndex="0" GridPane.rowIndex="2" prefHeight="30.0"
+                                       prefWidth="60.0" style="-fx-text-fill: -text-color;" text="性别:"/>
+                                <ComboBox fx:id="sexField" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                                          prefHeight="30.0" prefWidth="179.0">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="男"/>
+                                            <String fx:value="女"/>
+                                        </FXCollections>
+                                    </items>
+                                    <value>
+                                        <String fx:value="男"/>
+                                    </value>
+                                </ComboBox>
+                                <Label fx:id="phoneLabel" GridPane.columnIndex="0" GridPane.rowIndex="3"
+                                       prefHeight="30.0" prefWidth="60.0" style="-fx-text-fill: -text-color;"
+                                       text="手机号:"/>
+                                <TextField fx:id="phoneField" GridPane.columnIndex="1" GridPane.rowIndex="3"
+                                           prefHeight="30.0" prefWidth="151.0" promptText="手机号" styleClass="rectangle"/>
+                                <Label GridPane.columnIndex="0" GridPane.rowIndex="4" prefHeight="30.0" prefWidth="60.0"
+                                       style="-fx-text-fill: -text-color;" text="楼号:"/>
+                                <TextField fx:id="floorField" GridPane.columnIndex="1" GridPane.rowIndex="4"
+                                           prefHeight="30.0" prefWidth="151.0" promptText="楼号" styleClass="rectangle"/>
+                                <Label GridPane.columnIndex="0" GridPane.rowIndex="5" prefHeight="30.0" prefWidth="60.0"
+                                       style="-fx-text-fill: -text-color;" text="房号:"/>
+                                <TextField fx:id="roomField" GridPane.columnIndex="1" GridPane.rowIndex="5"
+                                           prefHeight="30.0" prefWidth="151.0" promptText="房号" styleClass="rectangle"/>
+                                <Label GridPane.columnIndex="0" GridPane.rowIndex="6" prefHeight="30.0" prefWidth="60.0"
+                                       style="-fx-text-fill: -text-color;" text="现场图片:"/>
+                                <BorderPane fx:id="avatarPane" GridPane.columnIndex="1"
+                                            GridPane.rowIndex="6"
+                                            layoutX="22.0" layoutY="234.0"
+                                            prefHeight="120.0" prefWidth="60.0">
+                                    <center>
+                                        <ListView fx:id="fileList"/>
+                                    </center>
+                                    <top>
+                                        <Button text="选择文件" onMouseClicked="#handleSelectFiles"/>
+                                    </top>
+                                </BorderPane>
+                                <Label GridPane.columnIndex="0" GridPane.rowIndex="7" prefHeight="30.0" prefWidth="60.0"
+                                       style="-fx-text-fill: -text-color;" text="报修内容:"/>
+                                <CodeArea fx:id="contentArea"
+                                          GridPane.columnIndex="1"
+                                          GridPane.rowIndex="7"
+                                          layoutX="22.0" layoutY="234.0"
+                                          prefHeight="100.0"
+                                          style="-fx-border-color: gray; -fx-border-width: 1;"
+                                          wrapText="true"/>
+                                <Label GridPane.columnIndex="0" GridPane.rowIndex="8" prefHeight="30.0" prefWidth="60.0"
+                                       style="-fx-text-fill: -text-color;" text="状态:"/>
+                                <ComboBox fx:id="statusField" GridPane.columnIndex="1" GridPane.rowIndex="8"
+                                          prefHeight="30.0" prefWidth="179.0">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                            <String fx:value="保存"/>
+                                            <String fx:value="提交"/>
+                                        </FXCollections>
+                                    </items>
+                                    <value>
+                                        <String fx:value="保存"/>
+                                    </value>
+                                </ComboBox>
+                                <Label fx:id="repairError" GridPane.columnIndex="1" GridPane.rowIndex="6"
+                                       styleClass="text-danger" text="你输入的用户信息错误" visible="false"/>
+                            </children>
+                        </GridPane>
+
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="478.0" spacing="10.0">
+                            <children>
+                                <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"
+                                        onMouseClicked="#addOrEditRepair" styleClass="btn-primary" text="提交"/>
+                                <Button layoutX="406.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"
+                                        prefWidth="100.0" onMouseClicked="#closeView" styleClass="btn-info" text="关闭"/>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="30.0" right="30.0" top="30.0"/>
+            </padding>
+        </VBox>
+    </children>
+    <stylesheets>
+        <URL value="@/styles/css/material-color.css"/>
+        <URL value="@/styles/css/skeleton.css"/>
+        <URL value="@/styles/css/light.css"/>
+        <URL value="@/styles/css/bootstrap.css"/>
+        <URL value="@/styles/css/simple-green.css"/>
+        <URL value="@/styles/css/shape.css"/>
+        <URL value="@/styles/css/typographic.css"/>
+        <URL value="@/styles/css/helpers.css"/>
+        <URL value="@/styles/css/master.css"/>
+    </stylesheets>
+</StackPane>

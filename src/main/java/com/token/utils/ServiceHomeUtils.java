@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class ServiceHomeUtils {
 
@@ -58,6 +59,38 @@ public class ServiceHomeUtils {
         new Thread(uploadTask).start();
         log.info("文件存储成功:{}", fileLocalPath);
         return fileLocalPath;
+    }
+
+    public static String setRepairStatusType(String status) {
+        if (status.equals("0" )){
+            return "未提交";
+        }
+        if (status.equals("1" )){
+            return "待受理";
+        }
+        if (status.equals("2")){
+            return  "已派工";
+        }
+        if (status.equals("3")){
+            return "维修完成";
+        }
+        return "";
+    }
+
+    public static String setRepairStatusType(Object status) {
+        if (status.equals("未提交") || status.equals("保存")){
+            return "0";
+        }
+        if (status.equals("待受理") || status.equals("提交")){
+            return "1";
+        }
+        if (status.equals("已派工")){
+            return "2";
+        }
+        if (status.equals("维修完成")){
+            return "3";
+        }
+        return "";
     }
 
     public static String setStatusType(String status) {
@@ -102,5 +135,9 @@ public class ServiceHomeUtils {
 
     public static void setLoginUserRole(UserRole loginUserRole) {
         ServiceHomeUtils.loginUserRole = loginUserRole;
+    }
+
+    public static String observableListToString(ObservableList<String> items) {
+        return items.stream().collect(Collectors.joining(","));
     }
 }

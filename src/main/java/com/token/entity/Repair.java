@@ -39,16 +39,16 @@ public class Repair  implements Serializable {
     private String room;
 
     /**
+     * 图片 
+     */
+    @TableField(value="avatar")
+    private String avatar;
+
+    /**
      * 内容 
      */
     @TableField(value="content")
     private String content;
-
-    /**
-     * 报修状态（0未提交 1待受理 2已派工 3维修结束） 
-     */
-    @TableField(value="status")
-    private String status;
 
     /**
      * 删除标志（0代表存在 1代表删除） 
@@ -57,10 +57,10 @@ public class Repair  implements Serializable {
     private String delFlag;
 
     /**
-     * 创建者 
+     * 报修状态（0未提交 1待受理 2已派工 3维修结束） 
      */
-    @TableField(value="create_by")
-    private String createBy;
+    @TableField(value="status")
+    private String status;
 
     /**
      * 创建时间 
@@ -69,16 +69,22 @@ public class Repair  implements Serializable {
     private LocalDateTime createTime;
 
     /**
-     * 更新者 
+     * 创建者 
      */
-    @TableField(value="update_by")
-    private String updateBy;
+    @TableField(value="create_by")
+    private String createBy;
 
     /**
      * 更新时间 
      */
     @TableField(value="update_time")
     private LocalDateTime updateTime;
+
+    /**
+     * 更新者 
+     */
+    @TableField(value="update_by")
+    private String updateBy;
 
     public Long getId() {
         return id;
@@ -112,20 +118,20 @@ public class Repair  implements Serializable {
         this.room = room;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getDelFlag() {
@@ -136,12 +142,12 @@ public class Repair  implements Serializable {
         this.delFlag = delFlag;
     }
 
-    public String getCreateBy() {
-        return createBy;
+    public String getStatus() {
+        return status;
     }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public LocalDateTime getCreateTime() {
@@ -152,12 +158,12 @@ public class Repair  implements Serializable {
         this.createTime = createTime;
     }
 
-    public String getUpdateBy() {
-        return updateBy;
+    public String getCreateBy() {
+        return createBy;
     }
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
     public LocalDateTime getUpdateTime() {
@@ -166,5 +172,13 @@ public class Repair  implements Serializable {
 
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
     }
 }
