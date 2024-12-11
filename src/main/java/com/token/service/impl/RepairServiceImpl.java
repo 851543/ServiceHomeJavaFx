@@ -63,13 +63,11 @@ public class RepairServiceImpl implements RepairService {
         return repairVOList;
     }
 
-    /**
-     * 删除报修信息
-     * @param repairVO
-     */
     @Override
     public void update(RepairVO repairVO) {
-
+        Repair repair = new Repair();
+        BeanUtils.copyProperties(repairVO,repair);
+        repairMapper.update(repair);
     }
 
     @Override

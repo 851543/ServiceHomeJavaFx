@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import java.net.*?>
+<?import com.gn.GNAvatarView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+<?import com.token.fx.component.EditableTextFlow?>
+<?import org.fxmisc.richtext.CodeArea?>
+<StackPane prefHeight="620.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.token.controller.ServiceController">
+    <children>
+        <VBox alignment="CENTER" spacing="10.0">
+            <children>
+                <VBox alignment="CENTER" spacing="20.0" styleClass="box-light" VBox.vgrow="ALWAYS">
+                    <children>
+                        <GridPane alignment="CENTER" prefWidth="478.0" hgap="10" vgap="10">
+                            <children>
+                                <Label fx:id="serviceLabel" GridPane.columnIndex="0" GridPane.rowIndex="2" prefHeight="30.0"
+                                       prefWidth="60.0" style="-fx-text-fill: -text-color;" text="维修员:"/>
+                                <ComboBox fx:id="service" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                                          prefHeight="30.0" prefWidth="179.0">
+                                    <items>
+                                        <FXCollections fx:factory="observableArrayList">
+                                        </FXCollections>
+                                    </items>
+                                </ComboBox>
+                                <Label fx:id="serviceError" GridPane.columnIndex="1" GridPane.rowIndex="6" styleClass="text-danger" text="请你选择维修员" visible="false" />
+                            </children>
+                        </GridPane>
+
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="478.0" spacing="10.0">
+                            <children>
+                                <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"
+                                        onMouseClicked="#addService" styleClass="btn-primary" text="提交"/>
+                                <Button layoutX="406.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"
+                                        prefWidth="100.0" onMouseClicked="#closeView" styleClass="btn-info" text="关闭"/>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="30.0" right="30.0" top="30.0"/>
+            </padding>
+        </VBox>
+    </children>
+    <stylesheets>
+        <URL value="@/styles/css/material-color.css"/>
+        <URL value="@/styles/css/skeleton.css"/>
+        <URL value="@/styles/css/light.css"/>
+        <URL value="@/styles/css/bootstrap.css"/>
+        <URL value="@/styles/css/simple-green.css"/>
+        <URL value="@/styles/css/shape.css"/>
+        <URL value="@/styles/css/typographic.css"/>
+        <URL value="@/styles/css/helpers.css"/>
+        <URL value="@/styles/css/master.css"/>
+    </stylesheets>
+</StackPane>

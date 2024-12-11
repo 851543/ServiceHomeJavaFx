@@ -9,6 +9,7 @@ import com.token.entity.vo.RepairVO;
 import com.token.eunms.UserRole;
 import com.token.fx.utils.Alerts;
 import com.token.mapper.RepairMapper;
+import com.token.service.DispatchService;
 import com.token.service.RepairService;
 import com.token.service.UserService;
 import com.token.utils.ServiceHomeUtils;
@@ -202,12 +203,11 @@ public class RepairController implements Initializable {
             }
             if (!repairVO.getStatus().equals("1")){
                 Alerts.warning("失败", "你的报修信息未在提交状态");
+                return;
             }
-
-            Alerts.success("成功", "派工成功");
+            serviceStage(repairVO);
         } catch (Exception e) {
             e.printStackTrace();
-            Alerts.error("失败", "派工失败");
         }
     }
 
@@ -282,6 +282,30 @@ public class RepairController implements Initializable {
         controller.setRepairVOTableView(repairVOTableView);
         stage.setHeight(800);
         stage.setWidth(700);
+        //设置窗口图标
+        stage.getIcons().add(new Image("/styles/img/icon.png"));
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(scene); //将场景载入舞台
+        stage.show(); //显示窗口
+    }
+
+    /**
+     * 指定维修员窗口
+     */
+    private void serviceStage(RepairVO repairVO) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(App.class.getResource("/template/repair/service.fxml"));
+        StackPane target = loader.load();
+        Scene scene = new Scene(target);
+
+
+        Stage stage = new Stage();//创建舞台；
+        ServiceController controller = loader.getController();
+        controller.setStage(stage);
+        controller.setRepairVO(repairVO);
+        controller.setRepairVOTableView(repairVOTableView);
+        stage.setHeight(400);
+        stage.setWidth(500);
         //设置窗口图标
         stage.getIcons().add(new Image("/styles/img/icon.png"));
         stage.initModality(Modality.APPLICATION_MODAL);
