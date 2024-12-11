@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -57,12 +58,17 @@ public class MainController implements Initializable {
     private Button repair;
 
     @FXML
+    private Button dispatch;
+
+    @FXML
     private Button service;
 
     @FXML
     private Button student;
 
     private Parent popContent;
+
+    private Parent parent;
 
     public static final PopOver popConfig = new PopOver();
 
@@ -119,9 +125,39 @@ public class MainController implements Initializable {
         if (ObjectUtils.isEmpty(ServiceHomeUtils.getLoginUserRole())){
             return;
         }
-        if (ServiceHomeUtils.getLoginUserRole() != UserRole.ADMIN){
-            service.setVisible(false);
-            student.setVisible(false);
+        if (ServiceHomeUtils.getLoginUserRole() == UserRole.ADMIN){
+            parent = dispatch.getParent();
+            if (parent instanceof Pane) {
+                ((Pane) parent).getChildren().remove(dispatch);
+            }
+        }
+        if (ServiceHomeUtils.getLoginUserRole() == UserRole.STUDENT){
+            parent = student.getParent();
+            if (parent instanceof Pane) {
+                ((Pane) parent).getChildren().remove(student);
+            }
+            parent = service.getParent();
+            if (parent instanceof Pane) {
+                ((Pane) parent).getChildren().remove(service);
+            }
+            parent = dispatch.getParent();
+            if (parent instanceof Pane) {
+                ((Pane) parent).getChildren().remove(dispatch);
+            }
+        }
+        if (ServiceHomeUtils.getLoginUserRole() == UserRole.SERVICE){
+            parent = student.getParent();
+            if (parent instanceof Pane) {
+                ((Pane) parent).getChildren().remove(student);
+            }
+            parent = service.getParent();
+            if (parent instanceof Pane) {
+                ((Pane) parent).getChildren().remove(service);
+            }
+            parent = repair.getParent();
+            if (parent instanceof Pane) {
+                ((Pane) parent).getChildren().remove(repair);
+            }
         }
     }
 

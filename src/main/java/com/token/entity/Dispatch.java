@@ -58,7 +58,7 @@ public class Dispatch  implements Serializable {
     private String repairResults;
 
     /**
-     * 报修状态（0未处理 1已处理） 
+     * 维修状态（0未处理 1已处理）
      */
     @TableField(value="status")
     private String status;
