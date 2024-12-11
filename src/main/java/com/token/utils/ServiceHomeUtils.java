@@ -5,6 +5,7 @@ import com.token.eunms.FxmlView;
 import com.token.eunms.UserRole;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -138,6 +139,10 @@ public class ServiceHomeUtils {
     }
 
     public static String observableListToString(ObservableList<String> items) {
-        return items.stream().collect(Collectors.joining(","));
+        return items.stream().map(item->{
+            ImageView imageView = new ImageView();
+            imageView.setImage(new Image(new File(item).toURI().toString()));
+            return avatarImage(imageView);
+        }).collect(Collectors.joining(","));
     }
 }

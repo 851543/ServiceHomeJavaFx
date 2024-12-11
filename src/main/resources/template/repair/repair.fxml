@@ -63,6 +63,8 @@
 
                                         <TableColumn fx:id="room" text="房号"/>
 
+                                        <TableColumn fx:id="avatar" text="图片"/>
+
                                         <TableColumn fx:id="content" text="内容"/>
 
                                         <TableColumn fx:id="status" text="状态"/>

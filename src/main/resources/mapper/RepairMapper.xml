@@ -41,6 +41,9 @@
             <if test="delFlag !=null and delFlag !=''">
                 and del_flag = #{delFlag}
             </if>
+            <if test="status !=null and status !=''">
+                and status = #{status}
+            </if>
             <if test="createTime !=null">
                 and create_time = #{createTime}
             </if>
@@ -53,8 +56,45 @@
             <if test="updateBy !=null and updateBy !=''">
                 and update_by = #{updateBy}
             </if>
+            and del_flag = 0
         </where>
     </sql>
+    <update id="update">
+        update repair
+        <set>
+            <if test="userId !=null">
+                user_id = #{userId},
+            </if>
+            <if test="floor !=null and floor !=''">
+                floor = #{floor},
+            </if>
+            <if test="room !=null and room !=''">
+                room = #{room},
+            </if>
+            <if test="avatar !=null and avatar !=''">
+                avatar = #{avatar},
+            </if>
+            <if test="content !=null and content !=''">
+                content = #{content},
+            </if>
+            <if test="delFlag !=null and delFlag !=''">
+                del_flag = #{delFlag},
+            </if>
+            <if test="createTime !=null">
+                create_time = #{createTime},
+            </if>
+            <if test="createBy !=null and createBy !=''">
+                create_by = #{createBy},
+            </if>
+            <if test="updateTime !=null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateBy !=null and updateBy !=''">
+                update_by = #{updateBy}
+            </if>
+        </set>
+            where id = #{id}
+    </update>
 
     <select id="repairList" resultType="com.token.entity.Repair">
         <include refid="selectRepairVo"></include>

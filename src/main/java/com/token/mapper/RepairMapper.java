@@ -18,4 +18,7 @@ public interface RepairMapper {
     void insert(Repair repair);
 
     List<Repair> repairList(Repair repair);
+
+    @AutoFill(OperationType.UPDATE)
+    void update(Repair repair);
 }

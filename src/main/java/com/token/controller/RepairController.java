@@ -8,6 +8,7 @@ import com.token.entity.dto.UserRoleDTO;
 import com.token.entity.vo.RepairVO;
 import com.token.eunms.UserRole;
 import com.token.fx.utils.Alerts;
+import com.token.mapper.RepairMapper;
 import com.token.service.RepairService;
 import com.token.service.UserService;
 import com.token.utils.ServiceHomeUtils;
@@ -17,6 +18,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -27,19 +29,20 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.fxmisc.richtext.CodeArea;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class RepairController implements Initializable {
@@ -87,6 +90,9 @@ public class RepairController implements Initializable {
     private TableColumn<User, String> content;
 
     @FXML
+    private TableColumn<User, String> avatar;
+
+    @FXML
     private TableColumn<User, String> status;
 
     @FXML
@@ -104,65 +110,112 @@ public class RepairController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        if (!ObjectUtils.isEmpty((ServiceHomeUtils.getLoginUserRole()))){
+            new Thread(()->{
+                repairVOObservableList.clear();
+                Repair repair = new Repair();
+                if (ServiceHomeUtils.getLoginUserRole() != UserRole.ADMIN) {
+                    repair.setUserId(Math.toIntExact(ServiceHomeUtils.getLoginUserInfo().getId()));
+                }
+                repair.setStatus("");
+                List<RepairVO> repairVOListList = SpringUtils.getBean(RepairService.class).repairList(repair);
+                repairVOObservableList.addAll(repairVOListList);
+                repairVOTableView.setItems(repairVOObservableList);
+            }).start();
+        }
         showWeb();
         setupColumns();
         updateItem();
-        if (!ObjectUtils.isEmpty(ServiceHomeUtils.getLoginUserRole())) selectRepair();
     }
 
     @FXML
-    private void selectRepair(){
+    private void selectRepair() {
         Repair repair = new Repair();
-        if (ServiceHomeUtils.getLoginUserRole() != UserRole.ADMIN){
+        if (ServiceHomeUtils.getLoginUserRole() != UserRole.ADMIN) {
             repair.setUserId(Math.toIntExact(ServiceHomeUtils.getLoginUserInfo().getId()));
         }
+        if (!StringUtils.isEmpty(repairIdField.getText())){
+            repair.setId(Long.valueOf(repairIdField.getText()));
+        }
+        repair.setStatus(ServiceHomeUtils.setRepairStatusType(statusBox.getValue()));
         List<RepairVO> repairVOListList = SpringUtils.getBean(RepairService.class).repairList(repair);
+        if (!StringUtils.isEmpty(repairNameField.getText())){
+            repairVOListList = repairVOListList.stream().filter(item -> {
+                if (item.getUserName().contains(repairNameField.getText())) {
+                    return true;
+                }
+                return false;
+            }).collect(Collectors.toList());
+        };
         repairVOTableView.setItems(new ObservableListWrapper<RepairVO>(new ArrayList<RepairVO>(repairVOListList)));
     }
 
     @FXML
-    private void insertRepair(){
+    private void insertRepair() {
         try {
             initStage(null);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-
     @FXML
-    private void updateRepair(){
+    private void updateRepair() {
         try {
-            initStage(null);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void deleteRepair(){
-        try {
-            initStage(null);
-        }catch (Exception e){
+            RepairVO repairVO = this.repairVOTableView.getSelectionModel().getSelectedItem();
+            if (repairVO == null) {
+                Alerts.warning("未选择", "请先选择要修改的报修信息");
+                return;
+            }
+            initStage(repairVO);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void dispatchBtn(){
+    private void deleteRepair() {
         try {
-            initStage(null);
-        }catch (Exception e){
+            RepairVO repairVO = this.repairVOTableView.getSelectionModel().getSelectedItem();
+            if (repairVO == null) {
+                Alerts.warning("未选择", "请先选择要删除的报修信息");
+                return;
+            }
+            repairVO.setDelFlag("1");
+            SpringUtils.getBean(RepairService.class).delete(repairVO);
+            repairVOObservableList.remove(repairVO);
+            Alerts.success("成功", "报修信息删除成功");
+        } catch (Exception e) {
             e.printStackTrace();
+            Alerts.error("失败", "报修信息删除失败");
         }
     }
 
-    private void showWeb(){
-        if (ObjectUtils.isEmpty(ServiceHomeUtils.getLoginUserRole())){
+    @FXML
+    private void dispatchBtn() {
+        try {
+            RepairVO repairVO = this.repairVOTableView.getSelectionModel().getSelectedItem();
+            if (repairVO == null) {
+                Alerts.warning("未选择", "请先选择要派工的报修信息");
+                return;
+            }
+            if (!repairVO.getStatus().equals("1")){
+                Alerts.warning("失败", "你的报修信息未在提交状态");
+            }
+
+            Alerts.success("成功", "派工成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alerts.error("失败", "派工失败");
+        }
+    }
+
+    private void showWeb() {
+        if (ObjectUtils.isEmpty(ServiceHomeUtils.getLoginUserRole())) {
             return;
         }
-        if (ServiceHomeUtils.getLoginUserRole() == UserRole.ADMIN){
+        if (ServiceHomeUtils.getLoginUserRole() == UserRole.ADMIN) {
             parent = repairIdLabel.getParent();
             if (parent instanceof Pane) {
                 ((Pane) parent).getChildren().remove(repairIdLabel);
@@ -173,7 +226,7 @@ public class RepairController implements Initializable {
             }
             return;
         }
-        if (ServiceHomeUtils.getLoginUserRole() == UserRole.STUDENT){
+        if (ServiceHomeUtils.getLoginUserRole() == UserRole.STUDENT) {
             parent = repairNameLabel.getParent();
             if (parent instanceof Pane) {
                 ((Pane) parent).getChildren().remove(repairNameLabel);
@@ -202,6 +255,7 @@ public class RepairController implements Initializable {
         phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         floor.setCellValueFactory(new PropertyValueFactory<>("floor"));
         room.setCellValueFactory(new PropertyValueFactory<>("room"));
+        avatar.setCellValueFactory(new PropertyValueFactory<>("avatar"));
         content.setCellValueFactory(new PropertyValueFactory<>("content"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
         createTime.setCellValueFactory(new PropertyValueFactory<>("createTime"));
@@ -239,6 +293,30 @@ public class RepairController implements Initializable {
      * 显示类型转换
      */
     private void updateItem() {
+        avatar.setCellFactory(param -> {
+            final ImageView imageView = new ImageView();
+            imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+            TableCell<User, String> cell = new TableCell<User, String>() {
+                @Override
+                protected void updateItem(String url, boolean empty) {
+                    if (url == null || empty) {
+                        imageView.setImage(null);
+                        setGraphic(null);
+                    } else {
+                        try {
+                            String[] urls = url.split(",");
+                            Image image = new Image(new File(urls[0]).toURI().toString());
+                            imageView.setImage(image);
+                            setGraphic(imageView);
+                        } catch (Exception e) {
+                            log.error(e.getMessage());
+                        }
+                    }
+                }
+            };
+            return cell;
+        });
         createTime.setCellFactory(param -> {
             TableCell<User, LocalDateTime> cell = new TableCell<User, LocalDateTime>() {
                 @Override
@@ -283,7 +361,7 @@ public class RepairController implements Initializable {
                         setText(null);
                     } else {
                         try {
-                            setText(ServiceHomeUtils.setStatusType(status));
+                            setText(ServiceHomeUtils.setRepairStatusType(status));
                         } catch (Exception e) {
                             log.error(e.getMessage());
                         }

@@ -97,6 +97,8 @@ public class LoginController implements Initializable {
 
         // 设置监听器
         setupListeners();
+
+        loginRole = UserRole.STUDENT;
     }
 
     /**

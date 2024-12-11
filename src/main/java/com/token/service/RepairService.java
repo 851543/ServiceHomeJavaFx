@@ -19,4 +19,16 @@ public interface RepairService {
      * @return
      */
     List<RepairVO> repairList(Repair repair);
+
+    /**
+     * 修改报修信息
+     * @param repairVO
+     */
+    void update(RepairVO repairVO);
+
+    /**
+     * 删除报修信息
+     * @param repairVO
+     */
+    void delete(RepairVO repairVO);
 }

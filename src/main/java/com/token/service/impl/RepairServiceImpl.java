@@ -62,4 +62,20 @@ public class RepairServiceImpl implements RepairService {
         }).collect(Collectors.toList());
         return repairVOList;
     }
+
+    /**
+     * 删除报修信息
+     * @param repairVO
+     */
+    @Override
+    public void update(RepairVO repairVO) {
+
+    }
+
+    @Override
+    public void delete(RepairVO repairVO) {
+        Repair repair = new Repair();
+        BeanUtils.copyProperties(repairVO,repair);
+        repairMapper.update(repair);
+    }
 }

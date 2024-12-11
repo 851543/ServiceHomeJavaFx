@@ -162,6 +162,8 @@
             <if test="role !=null and role !=''">
                 and c.role_name = #{role}
             </if>
+            and a.status = 0
+            and c.status = 0
             and a.del_flag = 0
             and c.del_flag = 0
         </where>

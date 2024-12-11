@@ -139,8 +139,15 @@ public class UserController implements Initializable {
             }
             user.setDelFlag("1");
             SpringUtils.getBean(UserService.class).update(user);
+            if (userRole == UserRole.STUDENT){
+                studentObservableList.remove(user);
+            }else {
+                serviceObservableList.remove(user);
+            }
+            Alerts.success("成功", "用户删除成功");
         } catch (Exception e) {
             e.printStackTrace();
+            Alerts.error("失败","用户删除失败");
         }
     }
 
@@ -153,7 +160,7 @@ public class UserController implements Initializable {
                 return;
             }
             initStage(user);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -10,6 +10,7 @@ import com.token.service.RepairService;
 import com.token.service.UserService;
 import com.token.utils.ServiceHomeUtils;
 import com.token.utils.SpringUtils;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -36,6 +37,7 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -177,7 +179,7 @@ public class RepairEditController implements Initializable {
                     return;
                 }
                 repairInfo(this.repairVO);
-//                SpringUtils.getBean(UserService.class).update(repairVO);
+                SpringUtils.getBean(RepairService.class).update(repairVO);
                 //刷新
                 repairVOTableView.refresh();
             }
@@ -315,17 +317,21 @@ public class RepairEditController implements Initializable {
     public void setRepairVo(RepairVO repairVO) {
         this.repairVO = repairVO;
         if (repairVO != null) {
-//            idField.setId(repairVO.getId().toString());
-//            nameField.setText(repairVO.getUserName());
-//            nickNameField.setText(user.getNickName());
-//            sexField.setValue(ServiceHomeUtils.sexType(user.getSex()));
-//            phoneField.setText(user.getPhoneNumber());
-//            try {
-//                avatarField.setImage(new Image(new File(user.getAvatar()).toURI().toString()));
-//            } catch (Exception e) {
-//                log.error(e.getMessage());
-//            }
-//            statusField.setValue(ServiceHomeUtils.setStatusType(user.getStatus()));
+            idField.setId(repairVO.getId().toString());
+            nameField.setText(repairVO.getUserName());
+            nickNameField.setText(repairVO.getNickName());
+            sexField.setValue(ServiceHomeUtils.sexType(repairVO.getSex()));
+            phoneField.setText(repairVO.getPhoneNumber());
+            try {
+                List<String> avatar = Arrays.stream(repairVO.getAvatar().split(",")).collect(Collectors.toList());
+                fileList.setItems(FXCollections.observableArrayList(avatar));
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+            floorField.setText(repairVO.getFloor());
+            roomField.setText(repairVO.getRoom());
+            contentArea.appendText(repairVO.getContent());
+            statusField.setValue(ServiceHomeUtils.setRepairStatusType(repairVO.getStatus()));
         }
     }
 }
