@@ -41,6 +41,9 @@ public class RepairServiceImpl implements RepairService {
         BeanUtils.copyProperties(repairVO,repair);
         repair.setUserId(Math.toIntExact(user.getId()));
         repairMapper.insert(repair);
+
+
+        BeanUtils.copyProperties(repair,repairVO);
     }
 
     /**

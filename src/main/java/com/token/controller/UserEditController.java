@@ -9,6 +9,7 @@ import com.token.utils.ServiceHomeUtils;
 import com.token.utils.SpringUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -66,6 +67,26 @@ public class UserEditController implements Initializable {
 
     ObservableList<User> serviceObservableList;
 
+    SortedList<User> sortedStudentList;
+
+    public SortedList<User> getSortedStudentList() {
+        return sortedStudentList;
+    }
+
+    public void setSortedStudentList(SortedList<User> sortedStudentList) {
+        this.sortedStudentList = sortedStudentList;
+    }
+
+    public SortedList<User> getSortedServiceList() {
+        return sortedServiceList;
+    }
+
+    public void setSortedServiceList(SortedList<User> sortedServiceList) {
+        this.sortedServiceList = sortedServiceList;
+    }
+
+    SortedList<User> sortedServiceList;
+
     private User user;
 
     private UserRole userRole;
@@ -90,10 +111,12 @@ public class UserEditController implements Initializable {
                 userInfo(user);
                 SpringUtils.getBean(UserService.class).insert(userRole, user);
                 if (userRole == UserRole.STUDENT) {
-                    studentObservableList.add(user);
+                    ObservableList<User> source = (ObservableList<User>) sortedStudentList.getSource();
+                    source.add(user);
                 }
                 if (userRole == UserRole.SERVICE) {
-                    serviceObservableList.add(user);
+                    ObservableList<User> source = (ObservableList<User>) sortedServiceList.getSource();
+                    source.add(user);
                 }
             } else {
                 boolean validate = userValidate(false);

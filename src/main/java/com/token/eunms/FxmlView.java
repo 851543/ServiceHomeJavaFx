@@ -61,6 +61,17 @@ public enum FxmlView {
         public String fxml() {
             return "/template/user/user.fxml";
         }
+    },
+    DISPATCH{
+        @Override
+        public String title() {
+            return getStringFromResourceBundle("dispatch.title");
+        }
+
+        @Override
+        public String fxml() {
+            return "/template/dispatch/dispatch.fxml";
+        }
     };
 
     /**

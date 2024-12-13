@@ -11,6 +11,7 @@ import com.token.utils.ServiceHomeUtils;
 import com.token.utils.SpringUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,6 +34,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -79,6 +81,10 @@ public class UserController implements Initializable {
 
     ObservableList<User> serviceObservableList = FXCollections.observableArrayList();
 
+    SortedList<User> sortedStudentList;
+
+    SortedList<User> sortedServiceList;
+
     private Logger log = LoggerFactory.getLogger(UserController.class);
 
     private UserRole userRole = UserRole.STUDENT;
@@ -100,7 +106,10 @@ public class UserController implements Initializable {
                 serviceObservableList.addAll(SpringUtils.getBean(UserService.class).userRoleList(userRoleListDTO));
                 observableList = false;
             }
-            userTableView.setItems(userRole == UserRole.STUDENT ? studentObservableList : serviceObservableList);
+            // 包装成SortedList并指定倒序排序
+            sortedStudentList = new SortedList(studentObservableList, Comparator.comparing(User::getCreateTime).reversed());
+            sortedServiceList = new SortedList(serviceObservableList, Comparator.comparing(User::getCreateTime).reversed());
+            userTableView.setItems(userRole == UserRole.STUDENT ? sortedStudentList : sortedServiceList);
         }; new Thread(runnable).start();
         userRoleShow();
         setupColumns();
@@ -208,6 +217,8 @@ public class UserController implements Initializable {
         controller.setStage(stage);
         controller.setStudentObservableList(studentObservableList);
         controller.setServiceObservableList(serviceObservableList);
+        controller.setSortedStudentList(sortedStudentList);
+        controller.setSortedServiceList(sortedServiceList);
         controller.setUserRole(userRole);
         controller.setUser(user);
         controller.setUserTableView(userTableView);

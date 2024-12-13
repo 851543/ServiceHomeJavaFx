@@ -13,6 +13,8 @@ import com.token.service.DispatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DispatchServiceImpl implements DispatchService {
 
@@ -28,5 +30,15 @@ public class DispatchServiceImpl implements DispatchService {
     @Override
     public void insert(Dispatch dispatch) {
         dispatchMapper.insert(dispatch);
+    }
+
+    @Override
+    public List<Dispatch> List(Dispatch dispatch) {
+        return dispatchMapper.List(dispatch);
+    }
+
+    @Override
+    public void update(Dispatch dispatch) {
+        dispatchMapper.update(dispatch);
     }
 }

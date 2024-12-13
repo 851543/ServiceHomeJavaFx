@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.token.mapper.DispatchMapper">
+    <sql id="selectDispatchVo">
+        select id,
+               repair_id,
+               student_id,
+               service_id,
+               fault_analysis,
+               maintenance_process,
+               repair_Results,
+               status,
+               del_flag,
+               create_by,
+               create_time,
+               update_by,
+               update_time
+        from dispatch
+    </sql>
+    <sql id="whereDispatchSearch">
+        <where>
+            <if test="id !=null">
+                and id = #{id}
+            </if>
+            <if test="repairId !=null">
+                and repair_id = #{repairId}
+            </if>
+            <if test="studentId !=null">
+                and student_id = #{studentId}
+            </if>
+            <if test="serviceId !=null">
+                and service_id = #{serviceId}
+            </if>
+            <if test="faultAnalysis !=null and faultAnalysis !=''">
+                and fault_analysis = #{faultAnalysis}
+            </if>
+            <if test="maintenanceProcess !=null and maintenanceProcess !=''">
+                and maintenance_process = #{maintenanceProcess}
+            </if>
+            <if test="repairResults !=null and repairResults !=''">
+                and repair_Results = #{repairResults}
+            </if>
+            <if test="status !=null and status !=''">
+                and status = #{status}
+            </if>
+            <if test="delFlag !=null and delFlag !=''">
+                and del_flag = #{delFlag}
+            </if>
+            <if test="createBy !=null and createBy !=''">
+                and create_by = #{createBy}
+            </if>
+            <if test="createTime !=null">
+                and create_time = #{createTime}
+            </if>
+            <if test="updateBy !=null and updateBy !=''">
+                and create_by = #{createBy}
+            </if>
+            <if test="updateTime !=null">
+                and update_time = #{updateTime}
+            </if>
+        </where>
+    </sql>
+    <select id="List" resultType="com.token.entity.Dispatch">
+        <include refid="selectDispatchVo"></include>
+        <include refid="whereDispatchSearch"></include>
+    </select>
+    <update id="update">
+        update dispatch
+        <set>
+            <if test="repairId !=null">
+                 repair_id = #{repairId},
+            </if>
+            <if test="studentId !=null">
+                 student_id = #{studentId},
+            </if>
+            <if test="serviceId !=null">
+                 service_id = #{serviceId},
+            </if>
+            <if test="faultAnalysis !=null and faultAnalysis !=''">
+                 fault_analysis = #{faultAnalysis},
+            </if>
+            <if test="maintenanceProcess !=null and maintenanceProcess !=''">
+                 maintenance_process = #{maintenanceProcess},
+            </if>
+            <if test="repairResults !=null and repairResults !=''">
+                 repair_Results = #{repairResults},
+            </if>
+            <if test="status !=null and status !=''">
+                 status = #{status},
+            </if>
+            <if test="delFlag !=null and delFlag !=''">
+                 del_flag = #{delFlag},
+            </if>
+            <if test="createBy !=null and createBy !=''">
+                 create_by = #{createBy},
+            </if>
+            <if test="createTime !=null">
+                 create_time = #{createTime},
+            </if>
+            <if test="updateBy !=null and updateBy !=''">
+                 create_by = #{createBy},
+            </if>
+            <if test="updateTime !=null">
+                 update_time = #{updateTime}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

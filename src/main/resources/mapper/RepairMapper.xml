@@ -102,5 +102,6 @@
     <select id="repairList" resultType="com.token.entity.Repair">
         <include refid="selectRepairVo"></include>
         <include refid="whereRepairSearch"></include>
+        order by create_time desc
     </select>
 </mapper>

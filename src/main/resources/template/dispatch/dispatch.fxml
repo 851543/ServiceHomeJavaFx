@@ -20,6 +20,7 @@
                                 <ComboBox fx:id="statusBox" prefHeight="30.0" prefWidth="179.0" visible="true" >
                                     <items>
                                         <FXCollections fx:factory="observableArrayList" >
+                                            <String fx:value="全部"/>
                                             <String fx:value="未处理" />
                                             <String fx:value="已处理" />
                                         </FXCollections>
@@ -33,18 +34,18 @@
 
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="478.0" spacing="10.0">
                             <children>
-                                <Button  layoutX="516.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"  styleClass="btn-success" text="查询" />
-                                <Button  layoutX="406.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"  styleClass="btn-info" text="详情" />
-                                <Button  layoutX="571.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"  prefWidth="100.0" styleClass="btn-secondary" text="添加维修单" />
+                                <Button  layoutX="516.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"  styleClass="btn-success" onMouseClicked="#select" text="查询" />
+                                <Button  layoutX="406.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="100.0"  styleClass="btn-info" onMouseClicked="#selectDetail" text="详情" />
+                                <Button  layoutX="571.0" layoutY="10.0" mnemonicParsing="false" prefHeight="54.0"  prefWidth="100.0" styleClass="btn-secondary" onMouseClicked="#insert" text="添加维修单" />
                             </children>
                         </HBox>
                         <VBox>
                             <children>
                                 <TableView fx:id="dispatchTableView" prefHeight="600">
                                     <columns>
-                                        <TableColumn fx:id="id" text="编号" visible="false"/>
+                                        <TableColumn fx:id="id" text="编号"/>
 
-                                        <TableColumn fx:id="user_id" text="报修单号"/>
+                                        <TableColumn fx:id="repairId" text="报修单号"/>
 
                                         <TableColumn fx:id="faultAnalysis" text="故障分析"/>
 

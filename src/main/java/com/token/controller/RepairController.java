@@ -16,6 +16,7 @@ import com.token.utils.ServiceHomeUtils;
 import com.token.utils.SpringUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -107,6 +108,8 @@ public class RepairController implements Initializable {
 
     ObservableList<RepairVO> repairVOObservableList = FXCollections.observableArrayList();
 
+    SortedList<RepairVO> repairSortedList;
+
     private Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Override
@@ -121,7 +124,8 @@ public class RepairController implements Initializable {
                 repair.setStatus("");
                 List<RepairVO> repairVOListList = SpringUtils.getBean(RepairService.class).repairList(repair);
                 repairVOObservableList.addAll(repairVOListList);
-                repairVOTableView.setItems(repairVOObservableList);
+                repairSortedList = new SortedList(repairVOObservableList, Comparator.comparing(RepairVO::getCreateTime).reversed());
+                repairVOTableView.setItems(repairSortedList);
             }).start();
         }
         showWeb();
@@ -278,6 +282,7 @@ public class RepairController implements Initializable {
         RepairEditController controller = loader.getController();
         controller.setStage(stage);
         controller.setRepairVOObservableList(repairVOObservableList);
+        controller.setRepairSortedList(repairSortedList);
         controller.setRepairVo(repairVO);
         controller.setRepairVOTableView(repairVOTableView);
         stage.setHeight(800);

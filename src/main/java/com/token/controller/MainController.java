@@ -126,12 +126,14 @@ public class MainController implements Initializable {
             return;
         }
         if (ServiceHomeUtils.getLoginUserRole() == UserRole.ADMIN){
+            SpringUtils.getBean(StageManager.class).switchContent(FxmlView.REPAIR,body);
             parent = dispatch.getParent();
             if (parent instanceof Pane) {
                 ((Pane) parent).getChildren().remove(dispatch);
             }
         }
         if (ServiceHomeUtils.getLoginUserRole() == UserRole.STUDENT){
+            SpringUtils.getBean(StageManager.class).switchContent(FxmlView.REPAIR,body);
             parent = student.getParent();
             if (parent instanceof Pane) {
                 ((Pane) parent).getChildren().remove(student);
@@ -146,6 +148,7 @@ public class MainController implements Initializable {
             }
         }
         if (ServiceHomeUtils.getLoginUserRole() == UserRole.SERVICE){
+            SpringUtils.getBean(StageManager.class).switchContent(FxmlView.DISPATCH,body);
             parent = student.getParent();
             if (parent instanceof Pane) {
                 ((Pane) parent).getChildren().remove(student);

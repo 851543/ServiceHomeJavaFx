@@ -62,6 +62,26 @@ public class ServiceHomeUtils {
         return fileLocalPath;
     }
 
+    public static String setDispatchStatusType(String status) {
+        if (status.equals("0" )){
+            return "未处理";
+        }
+        if (status.equals("1" )){
+            return "已处理";
+        }
+        return "";
+    }
+
+    public static String setDispatchStatusType(Object status) {
+        if (status.equals("未处理")){
+            return "0";
+        }
+        if (status.equals("已处理")){
+            return "1";
+        }
+        return "";
+    }
+
     public static String setRepairStatusType(String status) {
         if (status.equals("0" )){
             return "未提交";

@@ -12,6 +12,7 @@ import com.token.utils.ServiceHomeUtils;
 import com.token.utils.SpringUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,6 +38,7 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -99,6 +101,16 @@ public class RepairEditController implements Initializable {
     private TableView<RepairVO> repairVOTableView;
 
     ObservableList<RepairVO> repairVOObservableList;
+
+    SortedList<RepairVO> repairSortedList;
+
+    public SortedList<RepairVO> getRepairSortedList() {
+        return repairSortedList;
+    }
+
+    public void setRepairSortedList(SortedList<RepairVO> repairSortedList) {
+        this.repairSortedList = repairSortedList;
+    }
 
     private RepairVO repairVO;
 
@@ -171,7 +183,8 @@ public class RepairEditController implements Initializable {
                 repairInfo(repairVO);
 
                 SpringUtils.getBean(RepairService.class).insert(repairVO);
-                repairVOObservableList.add(repairVO);
+                ObservableList<RepairVO> source = (ObservableList<RepairVO>) repairSortedList.getSource();
+                source.add(repairVO);
             } else {
                 boolean validate = repairValidate(false);
                 if (validate) {
@@ -262,21 +275,6 @@ public class RepairEditController implements Initializable {
                     .map(File::toString)
                     .collect(Collectors.toList()));
         }
-    }
-
-    private Callback<ListView<String>, ListCell<String>> imageCellFactory() {
-        return list -> {
-            ListCell<String> cell = new ListCell<>();
-            cell.itemProperty().addListener((obs, oldVal, newVal) -> {
-                if (newVal != null) {
-                    Image image = new Image(new File(newVal).toURI().toString());
-                    cell.setGraphic(new ImageView(image));
-                } else {
-                    cell.setGraphic(null);
-                }
-            });
-            return cell;
-        };
     }
 
 
