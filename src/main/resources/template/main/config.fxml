@@ -24,12 +24,20 @@
             <Separator prefWidth="200.0" />
             <VBox fx:id="options" styleClass="options">
                <children>
-                  <JFXButton fx:id="btn_theme" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="241.0" onMouseClicked="#logOut" text="退出登陆">
+                  <JFXButton fx:id="pwd_theme" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="241.0" onMouseClicked="#updatePassword" text="修改密码">
                      <padding>
                         <Insets left="28.0" />
                      </padding>
                      <graphic>
                         <MaterialDesignIconView glyphName="BRIGHTNESS_6" size="25" />
+                     </graphic>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_theme" alignment="BASELINE_LEFT" graphicTextGap="20.0" prefHeight="50.0" prefWidth="241.0" onMouseClicked="#logOut" text="退出登陆">
+                     <padding>
+                        <Insets left="28.0" />
+                     </padding>
+                     <graphic>
+                        <MaterialDesignIconView glyphName="FLAG" size="25" />
                      </graphic>
                   </JFXButton>
                </children>
