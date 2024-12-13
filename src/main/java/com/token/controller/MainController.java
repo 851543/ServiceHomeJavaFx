@@ -4,14 +4,20 @@ package com.token.controller;
 import com.gn.App;
 import com.gn.GNAvatarView;
 import com.jfoenix.controls.JFXButton;
+import com.token.constant.UserConfigConstant;
 import com.token.entity.User;
+import com.token.entity.UserConfig;
 import com.token.eunms.FxmlView;
+import com.token.eunms.LoginStatus;
 import com.token.eunms.UserRole;
 import com.token.fx.SpringFXMLLoader;
 import com.token.fx.StageManager;
+import com.token.service.UserConfigService;
 import com.token.utils.ServiceHomeUtils;
 import com.token.utils.SpringUtils;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -66,6 +73,9 @@ public class MainController implements Initializable {
     @FXML
     private Button student;
 
+    @FXML
+    private ToggleGroup  changeStatusGroup;
+
     private Parent popContent;
 
     private Parent parent;
@@ -84,7 +94,42 @@ public class MainController implements Initializable {
            Platform.runLater(()->{
                avatar.setImage(image);
            });
+
+            UserConfig userConfig = SpringUtils.getBean(UserConfigService.class).select(loginUserInfo.getId());
+            if (ObjectUtils.isEmpty(userConfig)){
+                userConfig = new UserConfig();
+                userConfig.setUserId(Math.toIntExact(loginUserInfo.getId()));
+                userConfig.setConfigKey(UserConfigConstant.USER_LOGIN_STATUS_KEY);
+                userConfig.setConfigName(UserConfigConstant.USER_LOGIN_STATUS_NAME);
+                userConfig.setConfigValue(LoginStatus.ONLINE.getCode());
+                SpringUtils.getBean(UserConfigService.class).insert(userConfig);
+                userConfig = SpringUtils.getBean(UserConfigService.class).select(loginUserInfo.getId());
+            }
+            if (userConfig.getConfigKey().equals(UserConfigConstant.USER_LOGIN_STATUS_NAME)){
+                if (userConfig.getConfigValue().equals(LoginStatus.ONLINE.getValue())){
+                    System.out.println("在线语音");
+                }
+                if (userConfig.getConfigValue().equals(LoginStatus.LEAVE.getValue())){
+                    System.out.println("离开语音");
+                }
+                if (userConfig.getConfigValue().equals(LoginStatus.BUSY.getValue())){
+                    System.out.println("忙碌语音");
+                }
+            }
        }
+        changeStatusGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+                if (newValue != null && newValue instanceof RadioButton) {
+                    RadioButton selectedButton = (RadioButton) newValue;
+                    UserConfig userConfig = new UserConfig();
+                    userConfig.setUserId(Math.toIntExact(ServiceHomeUtils.getLoginUserInfo().getId()));
+                    userConfig.setConfigKey(UserConfigConstant.USER_LOGIN_STATUS_KEY);
+                    userConfig.setConfigValue(ServiceHomeUtils.setUserLoginStatus(selectedButton.getText()));
+                    SpringUtils.getBean(UserConfigService.class).update(userConfig);
+                }
+            }
+        });
     }
 
     @FXML

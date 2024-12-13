@@ -2,6 +2,7 @@ package com.token.utils;
 
 import com.token.entity.User;
 import com.token.eunms.FxmlView;
+import com.token.eunms.LoginStatus;
 import com.token.eunms.UserRole;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -164,5 +165,18 @@ public class ServiceHomeUtils {
             imageView.setImage(new Image(new File(item).toURI().toString()));
             return avatarImage(imageView);
         }).collect(Collectors.joining(","));
+    }
+
+    public static String setUserLoginStatus(String selectedText) {
+        if (LoginStatus.ONLINE.getValue().equals(selectedText)){
+            return "0";
+        }
+        if (LoginStatus.LEAVE.getValue().equals(selectedText)){
+            return "1";
+        }
+        if (LoginStatus.BUSY.getValue().equals(selectedText)){
+            return "2";
+        }
+        return "";
     }
 }

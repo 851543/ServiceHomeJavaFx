@@ -66,7 +66,7 @@
                               <children>
                                  <RadioButton contentDisplay="GRAPHIC_ONLY" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="25.0" selected="true" style="-fx-text-fill: -success;" text="在线">
                                     <toggleGroup>
-                                       <ToggleGroup fx:id="group" />
+                                       <ToggleGroup fx:id="changeStatusGroup" />
                                     </toggleGroup>
                                     <styleClass>
                                        <String fx:value="radio-success" />
@@ -76,7 +76,7 @@
                                        <Tooltip text="在线" />
                                     </tooltip>
                                  </RadioButton>
-                                 <RadioButton contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="25.0" style="-fx-text-fill: -warning;" text="离开" toggleGroup="$group">
+                                 <RadioButton contentDisplay="GRAPHIC_ONLY" layoutX="10.0" layoutY="10.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="25.0" style="-fx-text-fill: -warning;" text="离开" toggleGroup="$changeStatusGroup">
                                     <styleClass>
                                        <String fx:value="radio-warning" />
                                        <String fx:value="radio-drawer" />
@@ -85,7 +85,7 @@
                                        <Tooltip text="离开" />
                                     </tooltip>
                                  </RadioButton>
-                                 <RadioButton contentDisplay="GRAPHIC_ONLY" layoutX="110.0" layoutY="10.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="25.0" style="-fx-text-fill: -danger;" text="忙碌" toggleGroup="$group">
+                                 <RadioButton contentDisplay="GRAPHIC_ONLY" layoutX="110.0" layoutY="10.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="25.0" style="-fx-text-fill: -danger;" text="忙碌" toggleGroup="$changeStatusGroup">
                                     <styleClass>
                                        <String fx:value="radio-danger" />
                                        <String fx:value="radio-drawer" />
