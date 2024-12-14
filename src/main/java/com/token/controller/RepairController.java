@@ -6,6 +6,7 @@ import com.token.entity.Repair;
 import com.token.entity.User;
 import com.token.entity.dto.UserRoleDTO;
 import com.token.entity.vo.RepairVO;
+import com.token.eunms.RepairStatus;
 import com.token.eunms.UserRole;
 import com.token.fx.utils.Alerts;
 import com.token.mapper.RepairMapper;
@@ -171,6 +172,10 @@ public class RepairController implements Initializable {
             RepairVO repairVO = this.repairVOTableView.getSelectionModel().getSelectedItem();
             if (repairVO == null) {
                 Alerts.warning("未选择", "请先选择要修改的报修信息");
+                return;
+            }
+            if(ServiceHomeUtils.getLoginUserRole().equals(UserRole.STUDENT) && !ServiceHomeUtils.setRepairStatusType(repairVO.getStatus()).equals(RepairStatus.UN_SUBMITTED)){
+                Alerts.warning("不可修改", "当前状态不可修改报修信息");
                 return;
             }
             initStage(repairVO);
