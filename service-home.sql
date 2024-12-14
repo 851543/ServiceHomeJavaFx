@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 14/12/2024 18:14:58
+ Date: 14/12/2024 22:58:32
 */
 
 SET NAMES utf8mb4;
@@ -41,6 +41,7 @@ CREATE TABLE `dispatch`  (
 -- ----------------------------
 -- Records of dispatch
 -- ----------------------------
+INSERT INTO `dispatch` VALUES (104, 120, 126, 127, '修理成功', '修理成功', '修理成功', '1', '0', '1', '2024-12-14 22:50:29', '1', '2024-12-14 22:50:58');
 
 -- ----------------------------
 -- Table structure for repair
@@ -65,6 +66,7 @@ CREATE TABLE `repair`  (
 -- ----------------------------
 -- Records of repair
 -- ----------------------------
+INSERT INTO `repair` VALUES (120, 126, '西区三栋', '502', 'D:\\token\\file\\a72b66b1-e1b1-4e55-9454-b4ebda8a3871.jpg,D:\\token\\file\\01badc6a-dcf3-494f-95fa-49d3478a48c2.jpg', '急需修理人', '0', '3', '2024-12-14 22:43:39', '126', '2024-12-14 22:50:58', '127');
 
 -- ----------------------------
 -- Table structure for role
@@ -114,7 +116,9 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin', '牛牛', '', '13123556625', '0', 'D:\\token\\file\\dcc00c7d-116c-436a-936e-1208d47e9f4f.png', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '', NULL, '', '2024-12-08 21:01:39');
+INSERT INTO `user` VALUES (1, 'admin', '朱少', '', '18123886625', '0', 'D:\\token\\file\\0f6e5f16-58f0-4a52-8a77-599332b350b6.jpg', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', NULL, NULL, '', '2024-12-14 22:41:03');
+INSERT INTO `user` VALUES (126, '2431020120511', '彭少', NULL, '18888665585', '0', 'D:\\token\\file\\94d77b1d-b94b-4475-9ff4-95fe20f45da8.png', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1', '2024-12-14 22:41:48', '1', '2024-12-14 22:41:48');
+INSERT INTO `user` VALUES (127, '1', '只会修理人的阿俊', NULL, '13123556685', '0', 'D:\\token\\file\\d1dcda35-30cc-49c5-a39d-50674ebe1c8b.jpg', 'e10adc3949ba59abbe56e057f20f883e', '0', '0', '1', '2024-12-14 22:42:27', '1', '2024-12-14 22:42:27');
 
 -- ----------------------------
 -- Table structure for user_config
@@ -153,5 +157,7 @@ CREATE TABLE `user_role`  (
 -- Records of user_role
 -- ----------------------------
 INSERT INTO `user_role` VALUES (1, 1);
+INSERT INTO `user_role` VALUES (126, 2);
+INSERT INTO `user_role` VALUES (127, 3);
 
 SET FOREIGN_KEY_CHECKS = 1;
