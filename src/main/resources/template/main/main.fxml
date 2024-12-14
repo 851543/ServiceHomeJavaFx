@@ -27,6 +27,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.media.MediaView?>
 <StackPane fx:id="root" prefHeight="653.0" prefWidth="1106.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.token.controller.MainController">
    <children>
       <HBox fx:id="main" prefHeight="100.0" prefWidth="200.0">
