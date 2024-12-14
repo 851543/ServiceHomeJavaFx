@@ -53,9 +53,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-
-
-
         <!--    mvn install:install-file -DgroupId=gn -DartifactId=GNCalendar -Dversion=v1.0 -Dpackaging=jar -Dfile=E:\idea\project\Java\ServiceHomeJavaFx\lib\GNCalendar-1.0-alpha.jar-->
 
         <!--    mvn install:install-file -DgroupId=gn -DartifactId=GNButton -Dversion=v1.1.0 -Dpackaging=jar -Dfile=E:\idea\project\Java\ServiceHomeJavaFx\lib\GNButton-1.1.0.jar-->
