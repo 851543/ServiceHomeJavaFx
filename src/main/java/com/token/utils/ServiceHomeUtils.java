@@ -132,7 +132,7 @@ public class ServiceHomeUtils {
     }
 
     public static String setStatusType(Object status) {
-        return status.toString().equals("启用") ? "0" : "1";
+        return status.equals("启用") || status.equals("正常") ? "0" : "1";
     }
 
     public static void setLoginUserInfo(User loginUser){
