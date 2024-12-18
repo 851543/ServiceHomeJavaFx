@@ -126,7 +126,7 @@
             <plugin>
                 <groupId>io.github.fvarrui</groupId>
                 <artifactId>javapackager</artifactId>
-                <version>1.7.6</version>
+                <version>1.7.5</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -137,12 +137,10 @@
                             <mainClass>com.token.SpringJavaFxApplication</mainClass>
                             <bundleJre>true</bundleJre>
                             <jrePath>D:\Java\jdk-8\jre</jrePath>
-<!--                            <winConfig>-->
-<!--                                <icoFile>E:\idea\project\Java\ServiceHomeJavaFx\logo.ico</icoFile>-->
-<!--                                <generateSetup>false</generateSetup>-->
-<!--                                <generateMsi>false</generateMsi>-->
-<!--                                <generateMsm>false</generateMsm>-->
-<!--                            </winConfig>-->
+                            <platform>windows</platform>
+                            <winConfig>
+                                <generateMsi>false</generateMsi>
+                            </winConfig>
                         </configuration>
                     </execution>
                 </executions>
